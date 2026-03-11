@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>qliqr — Play Free. Win Real.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=Syne+Mono&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ink: #0a0a0f;
+  --paper: #f5f4ef;
+  --accent: #e8ff00;
+  --red: #ff3333;
+  --blue: #0047ff;
+  --muted: #9090a0;
+  --card-bg: #ffffff;
+  --border: #e2e2e8;
+  --dark: #13131a;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Syne', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* SCREENS */
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: flex; flex-direction: column; }
+
+/* ═══════════════════════════════
+   LANDING / LOBBY
+═══════════════════════════════ */
+#lobbyScreen { background: var(--paper); }
+
+/* NAV */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  border-bottom: 1px solid var(--border);
+  background: var(--paper);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-logo {
+  font-family: 'Syne Mono', monospace;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--ink);
+  letter-spacing: -1px;
+}
+
+.nav-logo em {
+  background: var(--accent);
+  color: var(--ink);
+  font-style: normal;
+  padding: 2px 6px;
+  margin-right: 2px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.live-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.live-dot {
+  width: 6px; height: 6px;
+  background: #00cc66;
+  border-radius: 50%;
+  animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+  0%,100%{opacity:1;} 50%{opacity:0.2;}
+}
+
+.btn-sponsor {
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 10px 22px;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-sponsor:hover { background: var(--blue); }
+
+/* HERO */
+.hero {
+  padding: 80px 48px 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-left h1 {
+  font-size: clamp(52px, 6vw, 88px);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -3px;
+  margin-bottom: 24px;
+}
+
+.hero-left h1 .accent-word {
+  background: var(--accent);
+  padding: 0 8px;
+  display: inline-block;
+  line-height: 1.05;
+}
+
+.hero-left h1 .red-word { color: var(--red); }
+
+.hero-sub {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.6;
+  font-family: 'DM Mono', monospace;
+  font-weight: 300;
+  max-width: 420px;
+  margin-bottom: 32px;
+  letter-spacing: -0.2px;
+}
+
+.hero-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.tag.hot { border-color: var(--red); color: var(--red); background: rgba(255,51,51,0.04); }
+.tag.free { border-color: #00cc66; color: #00aa55; background: rgba(0,204,102,0.04); }
+
+/* Hero right — stats */
+.hero-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.hero-stat {
+  background: var(--card-bg);
+  padding: 32px 28px;
+}
+
+.hero-stat-val {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.hero-stat-val.accent { color: var(--red); }
+.hero-stat-val.blue { color: var(--blue); }
+
+.hero-stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* HOW IT WORKS STRIP */
+.how-strip {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.how-step {
+  flex: 1;
+  padding: 36px 32px;
+  border-right: 1px solid var(--border);
+  position: relative;
+}
+.how-step:last-child { border-right: none; }
+
+.step-num {
+  font-family: 'Syne Mono', monospace;
+  font-size: 48px;
+  font-weight: 400;
+  color: var(--border);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.step-title {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+
+.step-desc {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.step-badge {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--ink);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 8px;
+  margin-top: 10px;
+  letter-spacing: 1px;
+}
+
+/* GAMES GRID */
+.games-section {
+  padding: 48px 48px 80px;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.section-title {
+  font-size: 13px;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.game-count-badge {
+  background: var(--red);
+  color: white;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  padding: 3px 10px;
+  letter-spacing: 1px;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2px;
+  background: var(--border);
+}
+
+/* GAME CARD */
+.game-card {
+  background: var(--card-bg);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s;
+}
+
+.game-card:hover { transform: translateY(-3px); z-index: 2; box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+
+.card-sponsor-bar {
+  height: 4px;
+  width: 100%;
+}
+
+.card-body { padding: 24px 24px 20px; }
+
+.card-sponsor-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.sponsor-logo-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.sponsor-emoji { font-size: 20px; }
+
+.card-status {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.status-live { color: #00cc66; }
+.status-hot { color: var(--red); }
+
+.card-pool {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.card-pool-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+/* Timer bar on card */
+.card-timer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.card-timer-val {
+  font-family: 'Syne Mono', monospace;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.card-timer-val.urgent { color: var(--red); animation: pulse-num 0.5s infinite; }
+@keyframes pulse-num { 0%,100%{opacity:1;} 50%{opacity:0.5;} }
+
+.card-timer-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+.card-bar-wrap {
+  height: 3px;
+  background: var(--border);
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-bar { height: 100%; transition: width 0.95s linear; }
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.card-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
+
+.card-cta {
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  padding: 8px 18px;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: background 0.15s;
+}
+
+.card-cta:hover { background: var(--blue); }
+.card-cta.hot { background: var(--red); }
+
+/* Video ad watched badge */
+.card-clicks-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0,71,255,0.07);
+  border: 1px solid rgba(0,71,255,0.15);
+  color: var(--blue);
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  padding: 3px 8px;
+  letter-spacing: 1px;
+}
+
+/* ═══════════════════════════════
+   AD / VIDEO SCREEN
+═══════════════════════════════ */
+#adScreen {
+  background: var(--dark);
+  color: white;
+  justify-content: center;
+  align-items: center;
+}
+
+.ad-container {
+  width: 100%;
+  max-width: 720px;
+  padding: 40px 20px;
+}
+
+.ad-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.ad-header-left {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 3px;
+}
+
+.ad-header-left strong { color: var(--accent); font-weight: 400; }
+
+.ad-pool-preview {
+  font-family: 'Syne', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.5);
+}
+
+.ad-pool-preview span { color: var(--accent); }
+
+/* Fake video player */
+.video-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000;
+  border: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.video-thumb {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.video-bg-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #0a0a2e 0%, #1a0530 50%, #0d1a0a 100%);
+}
+
+.video-sponsor-name {
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.video-sponsor-tagline {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  position: relative;
+  z-index: 2;
+  margin-top: 8px;
+  letter-spacing: 2px;
+}
+
+/* Progress overlay on video */
+.video-progress-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 16px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  z-index: 3;
+}
+
+.video-bar-wrap {
+  height: 3px;
+  background: rgba(255,255,255,0.15);
+  position: relative;
+}
+
+.video-bar { height: 100%; background: var(--accent); transition: width 0.95s linear; }
+
+/* Click credits meter */
+.credits-meter {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 20px 24px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.credits-icon { font-size: 28px; }
+
+.credits-info { flex: 1; }
+
+.credits-val {
+  font-family: 'Syne Mono', monospace;
+  font-size: 38px;
+  font-weight: 400;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.credits-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 2px;
+  margin-top: 4px;
+}
+
+.credits-earn-rate {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  text-align: right;
+  line-height: 1.6;
+}
+
+.credits-earn-rate strong { color: rgba(255,255,255,0.7); }
+
+/* Watching status */
+.watching-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.watching-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 1px;
+}
+
+.watching-dot {
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+
+.time-left-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 1px;
+}
+
+.time-left-label span { color: rgba(255,255,255,0.7); }
+
+.btn-enter-game {
+  width: 100%;
+  background: var(--accent);
+  color: var(--ink);
+  border: none;
+  padding: 20px;
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.btn-enter-game:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-enter-game:not(:disabled):hover { transform: translateY(-2px); }
+
+.btn-enter-game .btn-click-count {
+  background: var(--ink);
+  color: var(--accent);
+  padding: 3px 10px;
+  font-size: 14px;
+}
+
+/* ═══════════════════════════════
+   GAME SCREEN
+═══════════════════════════════ */
+#gameScreen {
+  background: var(--dark);
+  color: white;
+}
+
+.game-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 40px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.game-sponsor-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.game-sponsor-pill span { font-size: 20px; }
+
+.game-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.clicks-left-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(232,255,0,0.1);
+  border: 1px solid rgba(232,255,0,0.25);
+  padding: 6px 14px;
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
+
+.back-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.5);
+  padding: 6px 16px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+
+.back-btn:hover { border-color: rgba(255,255,255,0.4); color: white; }
+
+.game-body {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  flex: 1;
+}
+
+.game-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 40px;
+  border-right: 1px solid rgba(255,255,255,0.07);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Big glow */
+.game-glow {
+  position: absolute;
+  width: 500px; height: 500px;
+  background: radial-gradient(ellipse, rgba(232,255,0,0.06) 0%, transparent 70%);
+  pointer-events: none;
+  animation: glow-breathe 3s ease-in-out infinite;
+}
+@keyframes glow-breathe {
+  0%,100%{transform:scale(1);} 50%{transform:scale(1.2);}
+}
+
+.game-pool-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 4px;
+  position: relative;
+}
+
+.game-pool-val {
+  font-size: clamp(60px, 9vw, 100px);
+  font-weight: 800;
+  letter-spacing: -4px;
+  line-height: 1;
+  color: var(--accent);
+  text-shadow: 0 0 40px rgba(232,255,0,0.3);
+  margin-bottom: 48px;
+  position: relative;
+}
+
+/* timer */
+.game-timer-wrap {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.game-timer-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: rgba(255,255,255,0.25);
+  margin-bottom: 6px;
+}
+
+.game-timer {
+  font-family: 'Syne Mono', monospace;
+  font-size: clamp(80px, 14vw, 160px);
+  font-weight: 400;
+  line-height: 1;
+  color: white;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.game-timer.warn { color: #ff8800; }
+.game-timer.danger { color: var(--red); animation: danger-shake 0.08s infinite; }
+@keyframes danger-shake {
+  0%,100%{transform:translateX(0);}
+  33%{transform:translateX(-3px);}
+  66%{transform:translateX(3px);}
+}
+
+.game-timer-bar {
+  width: 280px;
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  margin: 12px auto 0;
+}
+
+.game-timer-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  transition: width 0.95s linear, background 0.3s;
+}
+
+/* THE BUTTON */
+.game-btn-outer {
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(232,255,0,0.15);
+  inset: -18px;
+  animation: ring-out 2.5s ease-out infinite;
+}
+.ring:nth-child(2) { inset: -38px; animation-delay: 0.7s; border-color: rgba(232,255,0,0.07); }
+
+@keyframes ring-out {
+  0%{transform:scale(0.85);opacity:0;}
+  40%{opacity:1;}
+  100%{transform:scale(1.1);opacity:0;}
+}
+
+.game-btn {
+  position: relative;
+  z-index: 2;
+  width: 190px; height: 190px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 35% 30%, #2a2a00, #111100);
+  border: 2px solid var(--accent);
+  box-shadow: 0 0 0 4px rgba(232,255,0,0.08), 0 0 50px rgba(232,255,0,0.2);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: transform 0.08s, box-shadow 0.08s;
+  user-select: none;
+}
+
+.game-btn:hover:not(:disabled) {
+  box-shadow: 0 0 0 6px rgba(232,255,0,0.12), 0 0 70px rgba(232,255,0,0.35);
+  transform: scale(1.05);
+}
+
+.game-btn:active { transform: scale(0.92); }
+.game-btn:disabled { opacity: 0.3; cursor: not-allowed; border-color: rgba(255,255,255,0.2); box-shadow: none; }
+
+.game-btn .btn-main { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; letter-spacing: 3px; color: var(--accent); }
+.game-btn .btn-clicks { font-family: 'DM Mono', monospace; font-size: 11px; color: rgba(232,255,0,0.5); letter-spacing: 1px; margin-top: 4px; }
+
+.out-of-clicks {
+  display: none;
+  text-align: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.7;
+  max-width: 300px;
+}
+
+.out-of-clicks a {
+  color: var(--accent);
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* sidebar */
+.game-sidebar {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-block {
+  padding: 24px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.sidebar-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.25);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+}
+
+.leader-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+}
+
+.leader-rank { color: rgba(255,255,255,0.2); min-width: 18px; }
+.leader-name { flex: 1; color: rgba(255,255,255,0.8); }
+.leader-name.me { color: var(--accent); }
+.leader-clicks { color: rgba(255,255,255,0.4); font-size: 11px; }
+.leader-last { display: inline-block; background: rgba(232,255,0,0.15); color: var(--accent); font-size: 10px; padding: 2px 6px; }
+
+.feed-item-game {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  opacity: 0;
+  animation: slide-in 0.3s forwards;
+}
+
+@keyframes slide-in {
+  from{opacity:0;transform:translateX(8px);}
+  to{opacity:1;transform:translateX(0);}
+}
+
+.feed-item-game span { color: rgba(255,255,255,0.7); }
+.feed-item-game .feed-you { color: var(--accent); }
+.feed-item-game .feed-ts { margin-left:auto; color: rgba(255,255,255,0.2); font-size: 10px; flex-shrink:0; }
+
+.feed-scroll { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 0; }
+
+/* WIN OVERLAY */
+.win-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.97);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 40px;
+}
+
+.win-overlay.show { display: flex; animation: appear 0.4s ease; }
+@keyframes appear { from{opacity:0;} to{opacity:1;} }
+
+.win-emoji { font-size: 80px; margin-bottom: 24px; animation: bounce 0.5s ease infinite alternate; }
+@keyframes bounce { from{transform:translateY(0);} to{transform:translateY(-12px);} }
+
+.win-headline {
+  font-size: clamp(60px, 10vw, 120px);
+  font-weight: 800;
+  letter-spacing: -4px;
+  line-height: 0.9;
+  margin-bottom: 16px;
+  color: var(--accent);
+  text-shadow: 0 0 60px rgba(232,255,0,0.5);
+}
+
+.win-amount { font-family: 'Syne Mono', monospace; font-size: 48px; color: white; margin-bottom: 8px; }
+.win-sub { font-family: 'DM Mono', monospace; font-size: 13px; color: rgba(255,255,255,0.4); letter-spacing: 2px; margin-bottom: 40px; }
+
+.win-actions { display: flex; gap: 12px; }
+
+.win-btn {
+  padding: 16px 36px;
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 1px;
+  border: none;
+}
+
+.win-btn.primary { background: var(--accent); color: var(--ink); }
+.win-btn.secondary { background: transparent; color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.15); }
+
+/* ripple */
+.ripple {
+  position: fixed;
+  border-radius: 50%;
+  background: rgba(232,255,0,0.12);
+  animation: ripple-out 0.7s ease-out forwards;
+  pointer-events: none;
+  z-index: 50;
+  transform: translate(-50%, -50%);
+}
+@keyframes ripple-out {
+  from{width:0;height:0;opacity:1;}
+  to{width:400px;height:400px;opacity:0;}
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:40px 24px;}
+  .how-strip{flex-direction:column;}
+  .how-step{border-right:none;border-bottom:1px solid var(--border);}
+  nav{padding:16px 24px;}
+  .games-section{padding:32px 24px 60px;}
+  .game-body{grid-template-columns:1fr;}
+  .game-sidebar{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ WIN OVERLAY ═══ -->
+<div class="win-overlay" id="winOverlay">
+  <div class="win-emoji">🏆</div>
+  <div class="win-headline">YOU WON.</div>
+  <div class="win-amount" id="winAmount">$0</div>
+  <div class="win-sub">YOUR CLICK WAS THE LAST ONE — PRIZE IS YOURS</div>
+  <div class="win-actions">
+    <button class="win-btn primary" id="winClaim">CLAIM PRIZE →</button>
+    <button class="win-btn secondary" id="winBack">PLAY AGAIN</button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 1: LOBBY ═══ -->
+<div class="screen active" id="lobbyScreen">
+
+  <nav>
+    <div class="nav-logo"><em>q</em>liqr</div>
+    <div class="nav-right">
+      <div class="live-count">
+        <div class="live-dot"></div>
+        <span id="liveCount">12 games live</span>
+      </div>
+      <button class="btn-sponsor" onclick="alert('Sponsor dashboard — coming soon!')">Run a Game →</button>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-left">
+      <h1>
+        Watch ads.<br>
+        <span class="accent-word">Get clicks.</span><br>
+        <span class="red-word">Win cash.</span>
+      </h1>
+      <div class="hero-sub">Every second you watch a sponsor's video earns you 1 click. The last person to click before the timer hits zero wins the entire prize pool. Free. Always.</div>
+      <div class="hero-tags">
+        <div class="tag free">✓ 100% FREE TO PLAY</div>
+        <div class="tag hot">🔥 REAL CASH PRIZES</div>
+        <div class="tag">NO PURCHASE NEEDED</div>
+        <div class="tag">MULTIPLE LIVE GAMES</div>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-val accent" id="heroTotalPools">$84,200</div>
+        <div class="hero-stat-label">PAID OUT ALL TIME</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val blue" id="heroLiveGames">12</div>
+        <div class="hero-stat-label">LIVE GAMES NOW</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val" id="heroPlayers">38,420</div>
+        <div class="hero-stat-label">ACTIVE PLAYERS</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val" id="heroSponsors">247</div>
+        <div class="hero-stat-label">SPONSOR BRANDS</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="how-strip">
+    <div class="how-step">
+      <div class="step-num">01</div>
+      <div class="step-title">Pick a Game</div>
+      <div class="step-desc">Browse live sponsored games. Each one has a real cash prize pool funded by the sponsor's ad budget.</div>
+      <div class="step-badge">FREE ENTRY</div>
+    </div>
+    <div class="how-step">
+      <div class="step-num">02</div>
+      <div class="step-title">Watch the Video</div>
+      <div class="step-desc">Watch the sponsor's ad (30–300 sec). Every second watched = 1 click credit deposited into your account.</div>
+      <div class="step-badge">1 SEC = 1 CLICK</div>
+    </div>
+    <div class="how-step">
+      <div class="step-num">03</div>
+      <div class="step-title">Use Your Clicks</div>
+      <div class="step-desc">Each click resets the 30-second countdown. The clock is always ticking. Everyone is watching. Timing is everything.</div>
+      <div class="step-badge">LAST CLICK WINS</div>
+    </div>
+    <div class="how-step">
+      <div class="step-num">04</div>
+      <div class="step-title">Win Everything</div>
+      <div class="step-desc">When 30 full seconds pass with zero clicks — the last person who clicked collects 100% of the prize pool.</div>
+      <div class="step-badge">REAL CASH OUT</div>
+    </div>
+  </div>
+
+  <div class="games-section">
+    <div class="section-header">
+      <div class="section-title">Live Games</div>
+      <div class="game-count-badge" id="gameCountBadge">12 LIVE</div>
+    </div>
+    <div class="games-grid" id="gamesGrid">
+      <!-- injected by JS -->
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══ SCREEN 2: AD / VIDEO ═══ -->
+<div class="screen" id="adScreen">
+  <div class="ad-container">
+    <div class="ad-header">
+      <div class="ad-header-left">SPONSORED BY <strong id="adSponsorName">—</strong></div>
+      <div class="ad-pool-preview">Pool: <span id="adPoolPreview">—</span></div>
+    </div>
+
+    <!-- Video player -->
+    <div class="video-player">
+      <div class="video-thumb">
+        <div class="video-bg-gradient" id="videoBg"></div>
+        <div class="video-sponsor-name" id="videoSponsorBig">—</div>
+        <div class="video-sponsor-tagline" id="videoTagline">—</div>
+      </div>
+      <div class="video-progress-overlay">
+        <div class="video-bar-wrap">
+          <div class="video-bar" id="videoBar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Credits meter -->
+    <div class="credits-meter">
+      <div class="credits-icon">⚡</div>
+      <div class="credits-info">
+        <div class="credits-val" id="creditsVal">0</div>
+        <div class="credits-label">CLICKS EARNED</div>
+      </div>
+      <div class="credits-earn-rate">
+        <div><strong>+1 click/sec</strong></div>
+        <div id="creditsRemaining">— sec remaining</div>
+      </div>
+    </div>
+
+    <div class="watching-row">
+      <div class="watching-status">
+        <div class="watching-dot"></div>
+        WATCHING AD
+      </div>
+      <div class="time-left-label">Ad ends in <span id="adTimeLeft">—</span>s</div>
+    </div>
+
+    <button class="btn-enter-game" id="enterGameBtn" disabled>
+      ENTER GAME WITH
+      <span class="btn-click-count" id="btnClickCount">0 CLICKS</span>
+    </button>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 3: GAME ═══ -->
+<div class="screen" id="gameScreen">
+  <div class="game-nav">
+    <div class="game-sponsor-pill">
+      <span id="gameSponsorEmoji">🎯</span>
+      <div>
+        <div style="font-size:13px;font-weight:800;" id="gameSponsorName">—</div>
+        <div style="font-family:'DM Mono',monospace;font-size:10px;color:rgba(255,255,255,0.3);letter-spacing:1px;" id="gameRoundLabel">ROUND 1</div>
+      </div>
+    </div>
+    <div class="game-nav-right">
+      <div class="clicks-left-pill">⚡ <span id="clicksLeftNav">0</span> clicks left</div>
+      <button class="back-btn" id="backToLobby">← LOBBY</button>
+    </div>
+  </div>
+
+  <div class="game-body">
+    <div class="game-center">
+      <div class="game-glow"></div>
+
+      <div class="game-pool-label">PRIZE POOL</div>
+      <div class="game-pool-val" id="gamePoolVal">$0</div>
+
+      <div class="game-timer-wrap">
+        <div class="game-timer-label">SECONDS UNTIL SOMEONE WINS</div>
+        <div class="game-timer" id="gameTimer">30</div>
+        <div class="game-timer-bar">
+          <div class="game-timer-bar-fill" id="gameTimerBar" style="width:100%"></div>
+        </div>
+      </div>
+
+      <div class="game-btn-outer">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <button class="game-btn" id="gameBtn">
+          <span class="btn-main">CLICK</span>
+          <span class="btn-clicks" id="gameBtnClicks">— left</span>
+        </button>
+      </div>
+
+      <div class="out-of-clicks" id="outOfClicks">
+        You've used all your clicks.<br>
+        <a onclick="watchMoreAd()">Watch another ad →</a> to earn more.
+      </div>
+    </div>
+
+    <div class="game-sidebar">
+      <div class="sidebar-block">
+        <div class="sidebar-label">Leaderboard</div>
+        <div id="leaderboard"><!-- injected --></div>
+      </div>
+      <div class="sidebar-block" style="flex:1;overflow:hidden;display:flex;flex-direction:column;">
+        <div class="sidebar-label">Live Feed</div>
+        <div class="feed-scroll" id="gameFeed"><!-- injected --></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══ DATA ═══
+const GAMES = [
+  { id:1, sponsor:'Nike', emoji:'👟', tagline:'Just Do It.', color:'#ff3333', bg:'linear-gradient(135deg,#1a0000,#3d0000)', pool:4200, maxPool:10000, timer:24, players:1420, adLen:60, cpv:0.05, hot:true },
+  { id:2, sponsor:'Spotify', emoji:'🎵', tagline:'Music for everyone.', color:'#1db954', bg:'linear-gradient(135deg,#001a0d,#003320)', pool:1840, maxPool:5000, timer:18, players:880, adLen:30, cpv:0.02, hot:false },
+  { id:3, sponsor:'Tesla', emoji:'⚡', tagline:'Accelerating sustainable energy.', color:'#cc0000', bg:'linear-gradient(135deg,#0d0000,#200000)', pool:12500, maxPool:25000, timer:8, players:3200, adLen:120, cpv:0.10, hot:true },
+  { id:4, sponsor:'Duolingo', emoji:'🦉', tagline:'Learn a language free.', color:'#58cc02', bg:'linear-gradient(135deg,#001a00,#003300)', pool:680, maxPool:2000, timer:27, players:320, adLen:45, cpv:0.01, hot:false },
+  { id:5, sponsor:'Coinbase', emoji:'₿', tagline:'The future of money.', color:'#0052ff', bg:'linear-gradient(135deg,#000820,#001040)', pool:8800, maxPool:20000, timer:4, players:2100, adLen:90, cpv:0.08, hot:true },
+  { id:6, sponsor:'Dropbox', emoji:'📦', tagline:'Your stuff, anywhere.', color:'#0061ff', bg:'linear-gradient(135deg,#000d1a,#001a33)', pool:920, maxPool:3000, timer:22, players:410, adLen:60, cpv:0.03, hot:false },
+  { id:7, sponsor:'Red Bull', emoji:'🐂', tagline:'Gives you wings.', color:'#ff6600', bg:'linear-gradient(135deg,#1a0800,#332000)', pool:5500, maxPool:12000, timer:11, players:1800, adLen:75, cpv:0.06, hot:true },
+  { id:8, sponsor:'Headspace', emoji:'🧘', tagline:'Meditation made simple.', color:'#f47d31', bg:'linear-gradient(135deg,#1a0d00,#331a00)', pool:340, maxPool:1500, timer:29, players:180, adLen:30, cpv:0.01, hot:false },
+];
+
+let currentGame = null;
+let adInterval = null;
+let gameInterval = null;
+let adSecondsWatched = 0;
+let clicksLeft = 0;
+let timeLeft = 30;
+let myClicks = 0;
+let lastClicker = 'velox99';
+let gameRunning = false;
+
+const FAKE = ['MXKILL','velox99','zzfire','nodachi','r3dline','phantom_','kr4ken','void_x','AXEON','rekt0r','surge','delta7'];
+const FLAGS = ['🇺🇸','🇩🇪','🇧🇷','🇯🇵','🇮🇳','🇬🇧','🇰🇷','🇫🇷','🇨🇦','🇦🇺'];
+
+function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+function pick(arr){return arr[rand(0,arr.length-1)];}
+function fmtMoney(n){return '$'+n.toLocaleString();}
+function fmt(n){return n.toLocaleString();}
+
+// ═══ SHOW SCREEN ═══
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ═══ BUILD GAME CARDS ═══
+function buildCards() {
+  const grid = document.getElementById('gamesGrid');
+  grid.innerHTML = '';
+  GAMES.forEach(g => {
+    const pct = (g.timer / 30) * 100;
+    const urgentCls = g.timer <= 5 ? 'urgent' : '';
+    const statusLabel = g.hot ? `<span class="status-hot">🔥 HOT</span>` : `<span class="status-live">● LIVE</span>`;
+    const poolColor = g.hot ? g.color : '#0a0a0f';
+    const clicksYouGet = g.adLen;
+
+    const card = document.createElement('div');
+    card.className = 'game-card';
+    card.innerHTML = `
+      <div class="card-sponsor-bar" style="background:${g.color}"></div>
+      <div class="card-body">
+        <div class="card-sponsor-row">
+          <div class="sponsor-logo-pill">
+            <span class="sponsor-emoji">${g.emoji}</span>
+            <span style="font-size:15px;">${g.sponsor}</span>
+          </div>
+          <div class="card-status">${statusLabel}</div>
+        </div>
+        <div class="card-pool" style="color:${poolColor}">${fmtMoney(g.pool)}</div>
+        <div class="card-pool-label">PRIZE POOL · ${fmt(g.players)} PLAYERS</div>
+        <div class="card-timer-row">
+          <div>
+            <div class="card-timer-val ${urgentCls}" id="ct-${g.id}">${g.timer}s</div>
+            <div class="card-timer-label">TIME LEFT</div>
+          </div>
+          <div class="card-clicks-badge" title="Watch ${g.adLen}s ad to earn ${g.adLen} clicks">
+            ⚡ ${g.adLen} clicks if you watch
+          </div>
+        </div>
+        <div class="card-bar-wrap">
+          <div class="card-bar" id="cb-${g.id}" style="width:${pct}%;background:${g.color}"></div>
+        </div>
+        <div class="card-footer">
+          <div class="card-meta">Ad: ${g.adLen}s · $${g.cpv.toFixed(2)}/view · Pool seeds 25%</div>
+          <button class="card-cta ${g.hot ? 'hot' : ''}" onclick="enterGame(${g.id})">PLAY →</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ═══ FAKE CARD TIMERS ═══
+function runCardTimers() {
+  setInterval(() => {
+    GAMES.forEach(g => {
+      // fake timer fluctuations
+      if (Math.random() < 0.3) {
+        g.timer = 30; // bot clicked
+        g.pool += rand(0, 3);
+      } else {
+        g.timer = Math.max(1, g.timer - 1);
+      }
+      const el = document.getElementById(`ct-${g.id}`);
+      const bar = document.getElementById(`cb-${g.id}`);
+      if (el) {
+        el.textContent = g.timer + 's';
+        el.className = 'card-timer-val' + (g.timer <= 5 ? ' urgent' : '');
+      }
+      if (bar) {
+        bar.style.width = ((g.timer/30)*100) + '%';
+      }
+    });
+  }, 1000);
+}
+
+// ═══ ENTER GAME → GO TO AD ═══
+function enterGame(id) {
+  currentGame = GAMES.find(g => g.id === id);
+  if (!currentGame) return;
+
+  // Set up ad screen
+  document.getElementById('adSponsorName').textContent = currentGame.sponsor.toUpperCase();
+  document.getElementById('adPoolPreview').textContent = fmtMoney(currentGame.pool);
+  document.getElementById('videoSponsorBig').textContent = currentGame.emoji + ' ' + currentGame.sponsor;
+  document.getElementById('videoTagline').textContent = currentGame.tagline;
+  document.getElementById('videoBg').style.background = currentGame.bg;
+  document.getElementById('creditsVal').textContent = '0';
+  document.getElementById('adTimeLeft').textContent = currentGame.adLen;
+  document.getElementById('creditsRemaining').textContent = currentGame.adLen + ' sec remaining';
+  document.getElementById('videoBar').style.width = '0%';
+  document.getElementById('enterGameBtn').disabled = true;
+  document.getElementById('btnClickCount').textContent = '0 CLICKS';
+
+  adSecondsWatched = 0;
+  show('adScreen');
+  startAd();
+}
+
+// ═══ AD PLAYBACK ═══
+function startAd() {
+  if (adInterval) clearInterval(adInterval);
+  const total = currentGame.adLen;
+  adInterval = setInterval(() => {
+    adSecondsWatched++;
+    const pct = (adSecondsWatched / total) * 100;
+    document.getElementById('videoBar').style.width = pct + '%';
+    document.getElementById('creditsVal').textContent = adSecondsWatched;
+    document.getElementById('adTimeLeft').textContent = Math.max(0, total - adSecondsWatched);
+    document.getElementById('creditsRemaining').textContent = Math.max(0, total - adSecondsWatched) + ' sec remaining';
+    document.getElementById('btnClickCount').textContent = adSecondsWatched + ' CLICKS';
+
+    // Allow enter after 5 seconds minimum
+    if (adSecondsWatched >= 5) {
+      document.getElementById('enterGameBtn').disabled = false;
+    }
+
+    if (adSecondsWatched >= total) {
+      clearInterval(adInterval);
+      document.getElementById('btnClickCount').textContent = total + ' CLICKS — FULL BONUS!';
+    }
+  }, 1000);
+}
+
+// ═══ ENTER GAME WITH CLICKS ═══
+document.getElementById('enterGameBtn').addEventListener('click', () => {
+  if (adInterval) clearInterval(adInterval);
+  clicksLeft = adSecondsWatched;
+  myClicks = 0;
+  launchGame();
+});
+
+function watchMoreAd() {
+  document.getElementById('outOfClicks').style.display = 'none';
+  document.getElementById('gameBtn').disabled = false;
+  show('adScreen');
+  adSecondsWatched = 0;
+  document.getElementById('creditsVal').textContent = '0';
+  document.getElementById('videoBar').style.width = '0%';
+  document.getElementById('adTimeLeft').textContent = currentGame.adLen;
+  document.getElementById('enterGameBtn').disabled = true;
+  startAd();
+}
+
+// ═══ LAUNCH GAME ═══
+function launchGame() {
+  // Set up game screen
+  document.getElementById('gameSponsorEmoji').textContent = currentGame.emoji;
+  document.getElementById('gameSponsorName').textContent = currentGame.sponsor;
+  document.getElementById('gameRoundLabel').textContent = 'SPONSORED GAME · FREE ENTRY';
+  document.getElementById('gamePoolVal').textContent = fmtMoney(currentGame.pool);
+  document.getElementById('clicksLeftNav').textContent = clicksLeft;
+  document.getElementById('gameBtnClicks').textContent = clicksLeft + ' left';
+  document.getElementById('outOfClicks').style.display = 'none';
+  document.getElementById('gameBtn').disabled = false;
+
+  timeLeft = 30;
+  gameRunning = true;
+  lastClicker = pick(FAKE);
+
+  updateGameTimer();
+  buildLeaderboard();
+  seedFeed();
+  show('gameScreen');
+
+  if (gameInterval) clearInterval(gameInterval);
+  gameInterval = setInterval(gameTick, 1000);
+  scheduleBotClick();
+}
+
+function updateGameTimer() {
+  const pct = (timeLeft / 30) * 100;
+  const el = document.getElementById('gameTimer');
+  el.textContent = timeLeft;
+  el.className = 'game-timer' + (timeLeft <= 5 ? ' danger' : timeLeft <= 10 ? ' warn' : '');
+  document.getElementById('gameTimerBar').style.width = pct + '%';
+  document.getElementById('gameTimerBar').style.background = timeLeft <= 5 ? 'var(--red)' : timeLeft <= 10 ? '#ff8800' : 'var(--accent)';
+  document.getElementById('gamePoolVal').textContent = fmtMoney(currentGame.pool);
+}
+
+function gameTick() {
+  if (!gameRunning) return;
+  timeLeft--;
+  updateGameTimer();
+  if (timeLeft <= 0) triggerWin();
+}
+
+function scheduleBotClick() {
+  if (!gameRunning) return;
+  const urgency = 1 - (timeLeft / 30);
+  const delay = rand(600, 3500) * (1 - urgency * 0.65);
+  setTimeout(() => {
+    if (!gameRunning) return;
+    const name = pick(FAKE);
+    lastClicker = name;
+    timeLeft = 30;
+    currentGame.pool += rand(0,2);
+    addFeed(pick(FLAGS) + ' ' + name, 'clicked', false);
+    updateGameTimer();
+    buildLeaderboard();
+    scheduleBotClick();
+  }, delay);
+}
+
+// ═══ PLAYER CLICK ═══
+document.getElementById('gameBtn').addEventListener('click', (e) => {
+  if (!gameRunning) return;
+  if (clicksLeft <= 0) return;
+
+  clicksLeft--;
+  myClicks++;
+  timeLeft = 30;
+  lastClicker = 'YOU';
+  currentGame.pool += rand(0,1);
+
+  document.getElementById('clicksLeftNav').textContent = clicksLeft;
+  document.getElementById('gameBtnClicks').textContent = clicksLeft + ' left';
+
+  if (clicksLeft === 0) {
+    document.getElementById('gameBtn').disabled = true;
+    document.getElementById('outOfClicks').style.display = 'block';
+  }
+
+  // Ripple
+  const r = document.createElement('div');
+  r.className = 'ripple';
+  r.style.left = e.clientX + 'px';
+  r.style.top = e.clientY + 'px';
+  document.body.appendChild(r);
+  setTimeout(() => r.remove(), 700);
+
+  addFeed('⚡ YOU', 'clicked — timer reset to 30s', true);
+  updateGameTimer();
+  buildLeaderboard();
+});
+
+// ═══ WIN ═══
+function triggerWin() {
+  gameRunning = false;
+  clearInterval(gameInterval);
+  if (lastClicker === 'YOU') {
+    document.getElementById('winAmount').textContent = fmtMoney(currentGame.pool);
+    document.getElementById('winOverlay').classList.add('show');
+  } else {
+    addFeed('🏆 ' + lastClicker, `WON ${fmtMoney(currentGame.pool)}!`, false);
+    // New round
+    setTimeout(() => {
+      currentGame.pool = rand(800, 3000);
+      timeLeft = 30;
+      updateGameTimer();
+      gameRunning = true;
+      gameInterval = setInterval(gameTick, 1000);
+      scheduleBotClick();
+    }, 4000);
+  }
+}
+
+document.getElementById('winClaim').addEventListener('click', () => {
+  document.getElementById('winOverlay').classList.remove('show');
+  show('lobbyScreen');
+});
+
+document.getElementById('winBack').addEventListener('click', () => {
+  document.getElementById('winOverlay').classList.remove('show');
+  show('lobbyScreen');
+});
+
+document.getElementById('backToLobby').addEventListener('click', () => {
+  gameRunning = false;
+  clearInterval(gameInterval);
+  show('lobbyScreen');
+});
+
+// ═══ LEADERBOARD ═══
+function buildLeaderboard() {
+  const lb = document.getElementById('leaderboard');
+  const fakes = FAKE.slice(0,4).map((n,i) => ({name:n, clicks: rand(3,40), isLast: n===lastClicker && lastClicker!=='YOU'}));
+  const meEntry = {name:'YOU', clicks: myClicks, isLast: lastClicker==='YOU'};
+  const all = [meEntry, ...fakes].sort((a,b)=>b.clicks-a.clicks).slice(0,5);
+
+  lb.innerHTML = all.map((p,i) => `
+    <div class="leader-item">
+      <span class="leader-rank">${i+1}</span>
+      <span class="leader-name ${p.name==='YOU'?'me':''}">${p.name}</span>
+      ${p.isLast ? '<span class="leader-last">LAST</span>' : ''}
+      <span class="leader-clicks">${p.clicks} clicks</span>
+    </div>
+  `).join('');
+}
+
+// ═══ FEED ═══
+function seedFeed() {
+  const feed = document.getElementById('gameFeed');
+  feed.innerHTML = '';
+  for(let i=0;i<4;i++) {
+    addFeed(pick(FLAGS)+' '+pick(FAKE), 'joined the game', false);
+  }
+}
+
+function addFeed(who, action, isYou) {
+  const feed = document.getElementById('gameFeed');
+  const el = document.createElement('div');
+  el.className = 'feed-item-game';
+  const ts = new Date().toLocaleTimeString('en-US',{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  el.innerHTML = `<${isYou?'span class="feed-you"':'span'}>${who}</${isYou?'span':'span'}> <span style="color:rgba(255,255,255,0.35)">${action}</span><span class="feed-ts">${ts}</span>`;
+  const children = feed.querySelectorAll('.feed-item-game');
+  if (children.length >= 8) children[children.length-1].remove();
+  feed.insertBefore(el, feed.firstChild);
+}
+
+// ═══ INIT ═══
+buildCards();
+runCardTimers();
+
+// Animate lobby stats
+let paidOut = 84200;
+setInterval(() => {
+  paidOut += rand(0,50);
+  document.getElementById('heroTotalPools').textContent = '$' + paidOut.toLocaleString();
+}, 3000);
+</script>
+</body>
+</html>
