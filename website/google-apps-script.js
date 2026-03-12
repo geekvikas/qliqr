@@ -14,33 +14,26 @@
  *    - Who has access: Anyone
  * 7. Copy the deployment URL
  * 8. Set it in your website: window.QLIQR_API_URL = 'YOUR_URL_HERE'
- *    (or add a <script> tag before the main script in index.html)
+ *
+ * IMPORTANT: After ANY code change, you must create a NEW deployment version:
+ *   Deploy > Manage deployments > Edit (pencil icon) > Version: New version > Deploy
+ *   (Simply saving the script is NOT enough — you must update the deployment.)
  */
 
-const SHEET_ID = SpreadsheetApp.getActiveSpreadsheet().getId();
-
 function doGet(e) {
-  const action = e.parameter.action;
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Waitlist');
+  var lastRow = sheet.getLastRow();
+  var count = lastRow > 1 ? lastRow - 1 : 0;
 
-  if (action === 'count') {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Waitlist');
-    const count = Math.max(0, sheet.getLastRow() - 1); // minus header row
-    return ContentService
-      .createTextOutput(JSON.stringify({ count: count }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
-
-  // Default: return count
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Waitlist');
-  const count = Math.max(0, sheet.getLastRow() - 1);
+  var output = JSON.stringify({ count: count });
   return ContentService
-    .createTextOutput(JSON.stringify({ count: count }))
+    .createTextOutput(output)
     .setMimeType(ContentService.MimeType.JSON);
 }
 
 function doPost(e) {
   try {
-    const data = JSON.parse(e.postData.contents);
+    var data = JSON.parse(e.postData.contents);
 
     if (data.action === 'waitlist') {
       return handleWaitlist(data);
@@ -50,22 +43,24 @@ function doPost(e) {
       return handleSurvey(data);
     }
 
-    return jsonResponse({ error: 'Unknown action' }, 400);
+    return makeResponse({ error: 'Unknown action' });
 
   } catch (err) {
-    return jsonResponse({ error: err.message }, 500);
+    return makeResponse({ error: err.toString() });
   }
 }
 
 function handleWaitlist(data) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Waitlist');
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Waitlist');
+  var lastRow = sheet.getLastRow();
 
-  // Deduplicate by email
-  const emails = sheet.getRange(2, 3, Math.max(1, sheet.getLastRow() - 1), 1).getValues();
-  for (let i = 0; i < emails.length; i++) {
-    if (emails[i][0] === data.email) {
-      const count = Math.max(0, sheet.getLastRow() - 1);
-      return jsonResponse({ ok: true, duplicate: true, count: count });
+  // Deduplicate by email — only check if there are data rows
+  if (lastRow > 1) {
+    var emails = sheet.getRange(2, 3, lastRow - 1, 1).getValues();
+    for (var i = 0; i < emails.length; i++) {
+      if (emails[i][0] === data.email) {
+        return makeResponse({ ok: true, duplicate: true, count: lastRow - 1 });
+      }
     }
   }
 
@@ -73,18 +68,18 @@ function handleWaitlist(data) {
   sheet.appendRow([
     data.timestamp || new Date().toISOString(),
     data.name || '',
-    data.email,
+    data.email || '',
     data.role || '',
     data.country || '',
     data.handle || '',
   ]);
 
-  const count = Math.max(0, sheet.getLastRow() - 1);
-  return jsonResponse({ ok: true, count: count });
+  var newCount = sheet.getLastRow() - 1;
+  return makeResponse({ ok: true, count: newCount });
 }
 
 function handleSurvey(data) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Survey');
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Survey');
 
   sheet.appendRow([
     data.timestamp || new Date().toISOString(),
@@ -95,10 +90,10 @@ function handleSurvey(data) {
     data.q5_features || '',
   ]);
 
-  return jsonResponse({ ok: true });
+  return makeResponse({ ok: true });
 }
 
-function jsonResponse(obj, code) {
+function makeResponse(obj) {
   return ContentService
     .createTextOutput(JSON.stringify(obj))
     .setMimeType(ContentService.MimeType.JSON);

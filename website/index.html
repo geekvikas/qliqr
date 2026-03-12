@@ -11,6 +11,7 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
+<script>window.QLIQR_API_URL = 'https://script.google.com/macros/s/AKfycbwIWtZiiJ86F3Tt5egs6twM-JCSQR88D_fX4QHfB6_6olwWp3EeXns5RMz17NRofe6ChQ/exec'</script>
 <style>
 /* ══════════════════════════════════════════
    DESIGN SYSTEM
@@ -1929,19 +1930,26 @@ let waitlistCount = 0;
 
 async function fetchCount() {
   if (!API_URL) {
-    // Fallback: use localStorage count
     waitlistCount = parseInt(localStorage.getItem('qliqr_wl_count') || '0');
     updateCountDisplay();
     return;
   }
   try {
-    const r = await fetch(API_URL + '?action=count');
-    const d = await r.json();
-    if (d.count !== undefined) {
-      waitlistCount = d.count;
+    // Google Apps Script redirects — follow it and parse the final response
+    const r = await fetch(API_URL + '?action=count', { redirect: 'follow' });
+    const text = await r.text();
+    // Apps Script sometimes wraps JSON in HTML — extract the JSON
+    let json;
+    try { json = JSON.parse(text); } catch (_) {
+      const match = text.match(/\{[^}]+\}/);
+      if (match) json = JSON.parse(match[0]);
+    }
+    if (json && json.count !== undefined) {
+      waitlistCount = json.count;
       localStorage.setItem('qliqr_wl_count', waitlistCount);
     }
   } catch (e) {
+    console.warn('[qliqr] Count fetch failed:', e);
     waitlistCount = parseInt(localStorage.getItem('qliqr_wl_count') || '0');
   }
   updateCountDisplay();
@@ -1997,15 +2005,20 @@ async function submitWaitlist() {
   btn.disabled = true;
 
   // Send to API
+  let apiOk = false;
   if (API_URL) {
     try {
+      // Use no-cors to guarantee the POST goes through even with Apps Script redirects
+      // We don't need the response — the data is saved server-side on receipt
       await fetch(API_URL, {
         method: 'POST',
+        mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify(data),
       });
+      apiOk = true;
     } catch (e) {
-      console.warn('[qliqr] API unavailable, saving locally', e);
+      console.warn('[qliqr] API POST failed:', e);
     }
   }
 
@@ -2022,6 +2035,9 @@ async function submitWaitlist() {
   // Show success
   document.getElementById('wlForm').style.display = 'none';
   document.getElementById('wlSuccess').classList.add('show');
+
+  // Refresh count from server after a short delay (give Apps Script time to write)
+  if (apiOk) setTimeout(fetchCount, 2000);
 
   console.log('[qliqr] Waitlist signup:', data);
 }
@@ -2049,11 +2065,12 @@ async function submitSurvey() {
     try {
       await fetch(API_URL, {
         method: 'POST',
+        mode: 'no-cors',
         headers: { 'Content-Type': 'text/plain' },
         body: JSON.stringify(data),
       });
     } catch (e) {
-      console.warn('[qliqr] API unavailable, saving locally');
+      console.warn('[qliqr] Survey POST failed:', e);
     }
   }
 
