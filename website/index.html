@@ -11,7 +11,10 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
-<script>window.QLIQR_API_URL = 'https://script.google.com/macros/s/AKfycbwIWtZiiJ86F3Tt5egs6twM-JCSQR88D_fX4QHfB6_6olwWp3EeXns5RMz17NRofe6ChQ/exec'</script>
+<script>
+  window.QLIQR_API_URL = 'https://script.google.com/macros/s/AKfycbwIWtZiiJ86F3Tt5egs6twM-JCSQR88D_fX4QHfB6_6olwWp3EeXns5RMz17NRofe6ChQ/exec'
+</script>
+
 <style>
 /* ══════════════════════════════════════════
    DESIGN SYSTEM
@@ -1454,14 +1457,8 @@ a { color: inherit; text-decoration: none; }
         <input type="email" id="heroEmail" placeholder="your@email.com" autocomplete="email"/>
         <button onclick="heroSignup()">Get Early Access</button>
       </div>
-      <div class="hero-proof">
-        <div class="hero-avatars">
-          <div class="av" style="background:#2d1f5e;">&#128126;</div>
-          <div class="av" style="background:#1f3d2e;">&#127941;</div>
-          <div class="av" style="background:#3d2f1f;">&#128293;</div>
-          <div class="av" style="background:#1f2d3d;">&#9889;</div>
-        </div>
-        <span><span class="count" id="heroCount">...</span> already on the waitlist</span>
+      <div class="hero-proof" id="heroProof" style="display:none">
+        <span><span class="count" id="heroCount">0</span> on the waitlist</span>
       </div>
     </div>
 
@@ -1469,7 +1466,7 @@ a { color: inherit; text-decoration: none; }
     <div class="sim-card">
       <div class="sim-header">
         <div class="sim-sponsor">&#9889; Acme Energy</div>
-        <div class="sim-live-badge"><div class="dot"></div> LIVE</div>
+        <div class="sim-live-badge"><div class="dot"></div> DEMO</div>
       </div>
       <div class="sim-body">
         <div class="sim-glow"></div>
@@ -1487,8 +1484,8 @@ a { color: inherit; text-decoration: none; }
       </div>
       <div class="sim-feed" id="simFeed"></div>
       <div class="sim-footer">
-        <span>142 players</span>
-        <span>Room #KX82TP</span>
+        <span>Preview</span>
+        <span>Interactive Demo</span>
       </div>
     </div>
   </div>
@@ -1508,7 +1505,7 @@ a { color: inherit; text-decoration: none; }
         <div class="how-num">01</div>
         <div class="how-icon">&#127918;</div>
         <div class="how-title">Pick a Game</div>
-        <div class="how-desc">Browse live games sponsored by real brands. Each one has a cash prize pool that grows with every ad view.</div>
+        <div class="how-desc">Browse games sponsored by real brands. Each one has a cash prize pool that grows with every ad view.</div>
         <div class="how-tag">FREE ENTRY</div>
       </div>
       <div class="how-card reveal">
@@ -1529,7 +1526,7 @@ a { color: inherit; text-decoration: none; }
         <div class="how-num">04</div>
         <div class="how-icon">&#128176;</div>
         <div class="how-title">Win the Pool</div>
-        <div class="how-desc">When 30 seconds pass with zero clicks, the last person who clicked takes 100% of the prize. Instant payout.</div>
+        <div class="how-desc">When 30 seconds pass with zero clicks, the last person who clicked takes the prize pool. Payout via Stripe.</div>
         <div class="how-tag">REAL CASH</div>
       </div>
     </div>
@@ -1542,14 +1539,14 @@ a { color: inherit; text-decoration: none; }
     <div class="showcase-header reveal">
       <div class="sec-label">SHOWCASE</div>
       <div class="sec-title">Built for your thumb</div>
-      <p class="sec-sub">Mobile-first. One-hand gameplay. Every pixel tuned for speed.</p>
+      <p class="sec-sub">Mobile-first design concept. One-hand gameplay. Every pixel tuned for speed.</p>
     </div>
     <div class="phones">
       <div class="phone reveal">
         <div class="phone-notch"></div>
         <div class="phone-screen">
           <div class="ps-lobby-title">Live Games</div>
-          <div class="ps-lobby-sub">8 GAMES LIVE</div>
+          <div class="ps-lobby-sub">CONCEPT</div>
           <div class="ps-game">
             <div class="ps-game-top">
               <div class="ps-game-sponsor">&#9889; Nike Running</div>
@@ -1612,38 +1609,38 @@ a { color: inherit; text-decoration: none; }
     <div class="sponsors-header reveal">
       <div class="sec-label">FOR SPONSORS</div>
       <div class="sec-title">Ads people want to watch</div>
-      <p class="sec-sub">Players choose to watch every second. No skipping. No scrolling past.</p>
+      <p class="sec-sub">Players are incentivized to watch every second. No skipping. No scrolling past.</p>
     </div>
     <div class="sponsors-grid reveal">
       <div class="sp-card">
         <div class="sp-icon">&#127916;</div>
-        <div class="sp-title">94% Completion Rate</div>
-        <div class="sp-desc">Players are motivated to watch every second — their clicks depend on it. No more 5-second skips.</div>
+        <div class="sp-title">Incentivized Completion</div>
+        <div class="sp-desc">Players earn 1 click per second watched — so they're motivated to watch every second of your ad. No skipping.</div>
       </div>
       <div class="sp-card">
         <div class="sp-icon">&#128176;</div>
         <div class="sp-title">Pay Per Second</div>
-        <div class="sp-desc">Set your own CPV rate ($0.01-$0.10/sec). Only pay for verified, engaged watch time. Full budget control.</div>
+        <div class="sp-desc">You set your own CPV rate ($0.01-$0.10/sec). Only pay for verified watch time. Full budget control.</div>
       </div>
       <div class="sp-card">
         <div class="sp-icon">&#128200;</div>
         <div class="sp-title">Real-Time Dashboard</div>
-        <div class="sp-desc">Watch completion rates, geographic data, and engagement metrics update live as your campaign runs.</div>
+        <div class="sp-desc">Track completion rates, geographic data, and engagement metrics as your campaign runs. (Coming at launch.)</div>
       </div>
       <div class="sp-card">
         <div class="sp-icon">&#127919;</div>
         <div class="sp-title">Brand Moments</div>
-        <div class="sp-desc">Your brand is tied to the excitement. Winners remember who funded their prize. Permanent positive association.</div>
+        <div class="sp-desc">Your brand funds the prize. Winners associate the excitement with you. A new kind of positive brand placement.</div>
       </div>
       <div class="sp-card">
         <div class="sp-icon">&#128274;</div>
         <div class="sp-title">Fraud Protection</div>
-        <div class="sp-desc">ML-powered scoring. Tab-focus tracking. IP dedup. Device fingerprinting. Only real humans count.</div>
+        <div class="sp-desc">Built-in tab-focus tracking, IP dedup, device fingerprinting, and fraud scoring. Designed to count only real views.</div>
       </div>
       <div class="sp-card">
         <div class="sp-icon">&#128640;</div>
-        <div class="sp-title">10-Min Launch</div>
-        <div class="sp-desc">Upload video, set budget, fund via Stripe. Your game goes live in under 10 minutes. No sales calls needed.</div>
+        <div class="sp-title">Simple Setup</div>
+        <div class="sp-desc">Upload a video, set your budget, fund via Stripe. No sales calls. Designed to get your campaign running fast.</div>
       </div>
     </div>
   </div>
@@ -1656,12 +1653,12 @@ a { color: inherit; text-decoration: none; }
       <div class="waitlist-left reveal">
         <div class="sec-label">EARLY ACCESS</div>
         <div class="sec-title">Get in first.</div>
-        <p class="sec-sub">The first 1,000 players get lifetime bonus clicks on every game. Reserve your spot and your username.</p>
+        <p class="sec-sub">Be among the first to play when we launch. Reserve your username and help shape the product.</p>
         <ul class="wl-perks">
-          <li><span class="icon">&#9889;</span> +5 bonus clicks on every game, forever</li>
-          <li><span class="icon">&#128274;</span> Lock your username before public launch</li>
-          <li><span class="icon">&#127942;</span> Early-access-only launch tournament</li>
-          <li><span class="icon">&#128227;</span> Shape the product — your feedback ships first</li>
+          <li><span class="icon">&#9889;</span> Be first to know when we go live</li>
+          <li><span class="icon">&#128274;</span> Reserve your username before public launch</li>
+          <li><span class="icon">&#128227;</span> Shape the product — early feedback gets prioritized</li>
+          <li><span class="icon">&#127942;</span> Invited to test before public launch</li>
         </ul>
         <div class="wl-counter">
           <div class="wl-counter-num" id="wlCounterNum">...</div>
@@ -1831,23 +1828,23 @@ a { color: inherit; text-decoration: none; }
 
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">Is it really free? <span class="arrow">+</span></button>
-      <div class="faq-a"><div class="faq-a-inner">Yes, 100%. Sponsors fund everything. You watch their ad, earn clicks, and compete. The only cost is your time watching the video. No sign-up fee, no in-app purchases, no hidden charges.</div></div>
+      <div class="faq-a"><div class="faq-a-inner">That's the plan — 100% free. Sponsors will fund everything. You watch their ad, earn clicks, and compete. No sign-up fee, no in-app purchases, no hidden charges.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">How do winners get paid? <span class="arrow">+</span></button>
-      <div class="faq-a"><div class="faq-a-inner">Instant payout via Stripe Connect. Set up a free Stripe account, and when you win, the money is transferred directly. Prizes under $500 pay out immediately. Larger wins go through a brief review (up to 7 days) to prevent fraud.</div></div>
+      <div class="faq-a"><div class="faq-a-inner">We're building payouts on Stripe Connect. Winners will set up a free Stripe account, and prize money will be transferred directly. We're designing the system so smaller prizes pay out quickly, with larger wins going through a brief review to prevent fraud.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">What stops bots from winning? <span class="arrow">+</span></button>
-      <div class="faq-a"><div class="faq-a-inner">Multi-layer fraud detection: IP rate limiting, device fingerprinting, tab-focus tracking during ads, heartbeat cadence analysis, and ML-powered fraud scoring. Bot-like behavior gets flagged instantly. We take this very seriously — fair play is the whole point.</div></div>
+      <div class="faq-a"><div class="faq-a-inner">We're building multi-layer fraud detection: IP rate limiting, device fingerprinting, tab-focus tracking during ads, and fraud scoring. Fair play is a core design priority — bot-like behavior will be flagged and banned.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">How big do prize pools get? <span class="arrow">+</span></button>
-      <div class="faq-a"><div class="faq-a-inner">Pools grow with every ad view. Typically 25% of each view's revenue goes to the pool. Ranges from $10 to $10,000+ depending on the sponsor's budget and player count. More players watching = bigger pool.</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Prize pools will grow with every ad view — a portion of each view's revenue goes directly into the pool. The exact size depends on the sponsor's budget and player count. More players watching = bigger pool.</div></div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">When does it launch? <span class="arrow">+</span></button>
-      <div class="faq-a"><div class="faq-a-inner">We're building now. Join the waitlist — first 1,000 get lifetime bonus clicks. We'll email you when it's your turn.</div></div>
+      <div class="faq-a"><div class="faq-a-inner">We're actively building. Join the waitlist and we'll email you when it's time to play.</div></div>
     </div>
   </div>
 </section>
@@ -1959,6 +1956,16 @@ function updateCountDisplay() {
   const display = waitlistCount > 0 ? waitlistCount.toLocaleString() : '0';
   document.getElementById('heroCount').textContent = display;
   document.getElementById('wlCounterNum').textContent = display;
+  // Only show counters if there are actual signups
+  const heroProof = document.getElementById('heroProof');
+  const wlCounter = document.querySelector('.wl-counter');
+  if (waitlistCount > 0) {
+    if (heroProof) heroProof.style.display = 'flex';
+    if (wlCounter) wlCounter.style.display = 'flex';
+  } else {
+    if (heroProof) heroProof.style.display = 'none';
+    if (wlCounter) wlCounter.style.display = 'none';
+  }
 }
 
 fetchCount();
@@ -2106,7 +2113,7 @@ function toggleFaq(btn) {
 // SHARE
 // ══════════════════════════════════════════
 function shareTwitter() {
-  const text = encodeURIComponent('Just joined the qliqr waitlist — a free game where watching ads earns you clicks, and the last click wins real cash. Zero cost to play.');
+  const text = encodeURIComponent('Just joined the qliqr waitlist — a new game where you watch an ad, earn clicks, and the last click wins the prize pool. Free to play. Coming soon.');
   window.open('https://twitter.com/intent/tweet?text=' + text, '_blank');
 }
 
