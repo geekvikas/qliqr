@@ -3,309 +3,401 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>qliqr — Watch Ads. Get Clicks. Win Cash. Join the Waitlist.</title>
-<meta name="description" content="The zero-cost game where watching ads earns you clicks, and the last click wins real cash. Join the waitlist for early access."/>
+<title>qliqr — The Last Click Wins</title>
+<meta name="description" content="A zero-cost prize game. Watch a sponsor's ad, earn clicks, and be the last one standing. Real cash. Free to play."/>
 <meta property="og:title" content="qliqr — The Last Click Wins"/>
-<meta property="og:description" content="Watch ads. Get clicks. Win cash. A zero-cost prize game funded by sponsors."/>
+<meta property="og:description" content="Watch ads. Earn clicks. Be the last click. Win real cash."/>
 <meta property="og:type" content="website"/>
-<meta property="og:image" content="og-image.png"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&family=Syne+Mono&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
+/* ══════════════════════════════════════════
+   DESIGN SYSTEM
+   ══════════════════════════════════════════ */
 :root {
-  --ink: #0a0a0f;
-  --paper: #f5f4ef;
-  --accent: #e8ff00;
-  --red: #ff3333;
-  --blue: #0047ff;
+  --bg: #0b0b0f;
+  --bg2: #111118;
+  --bg3: #1a1a24;
+  --text: #e8e8ed;
+  --text2: #8888a0;
+  --text3: #55556a;
+  --lime: #c6f135;
+  --lime-dim: rgba(198,241,53,0.12);
+  --orange: #ff6b35;
+  --cyan: #00e5ff;
+  --magenta: #ff2d78;
   --gold: #ffd700;
-  --muted: #6a6a80;
-  --surface: #13131a;
-  --border: #e2e2e8;
-  --dark-border: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.06);
+  --border2: rgba(255,255,255,0.1);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --font: 'Space Grotesk', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --display: 'Syne', sans-serif;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: 'Syne', sans-serif;
-  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
   overflow-x: hidden;
 }
 
-/* ═══════════════════════════════
-   NAV
-═══════════════════════════════ */
-nav {
+::selection { background: var(--lime); color: var(--bg); }
+
+a { color: inherit; text-decoration: none; }
+
+/* ══════════════════════════════════════════
+   NAV — minimal floating pill
+   ══════════════════════════════════════════ */
+.nav {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 20px 48px;
-  border-bottom: 1px solid var(--border);
-  background: var(--paper);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  backdrop-filter: blur(12px);
-  background: rgba(245,244,239,0.92);
+  gap: 4px;
+  padding: 6px 8px;
+  background: rgba(17,17,24,0.85);
+  backdrop-filter: blur(20px) saturate(1.4);
+  border: 1px solid var(--border2);
+  border-radius: 40px;
 }
 
 .nav-logo {
-  font-family: 'Syne Mono', monospace;
-  font-size: 22px;
-  font-weight: 400;
-  color: var(--ink);
-  letter-spacing: -1px;
-  text-decoration: none;
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 800;
+  padding: 8px 16px;
+  color: var(--lime);
+  letter-spacing: -0.5px;
 }
 
-.nav-logo em {
-  background: var(--accent);
-  color: var(--ink);
-  font-style: normal;
-  padding: 2px 6px;
-  margin-right: 2px;
-}
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 28px;
-  list-style: none;
-}
-
-.nav-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  color: var(--muted);
-  text-decoration: none;
-  letter-spacing: 1px;
-  transition: color 0.2s;
-}
-
-.nav-links a:hover { color: var(--ink); }
-
-.btn-cta-nav {
-  background: var(--ink);
-  color: var(--paper);
-  border: none;
-  padding: 10px 22px;
-  font-family: 'Syne', sans-serif;
+.nav-link {
+  padding: 8px 16px;
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  transition: background 0.2s;
-  text-decoration: none;
-}
-
-.btn-cta-nav:hover { background: var(--blue); }
-
-/* ═══════════════════════════════
-   HERO
-═══════════════════════════════ */
-.hero {
-  padding: 100px 48px 80px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  align-items: center;
-  border-bottom: 1px solid var(--border);
-  min-height: 85vh;
-}
-
-.hero-left h1 {
-  font-size: clamp(48px, 6vw, 88px);
-  font-weight: 800;
-  line-height: 0.95;
-  letter-spacing: -3px;
-  margin-bottom: 28px;
-}
-
-.hero-left h1 .accent-word {
-  background: var(--accent);
-  padding: 0 8px;
-  display: inline-block;
-  line-height: 1.05;
-}
-
-.hero-left h1 .red-word { color: var(--red); }
-
-.hero-sub {
-  font-size: 16px;
-  color: var(--muted);
-  line-height: 1.7;
-  font-family: 'DM Mono', monospace;
-  font-weight: 300;
-  max-width: 440px;
-  margin-bottom: 36px;
-  letter-spacing: -0.2px;
-}
-
-.hero-tags {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
-}
-
-.tag {
-  border: 1px solid var(--border);
-  padding: 6px 14px;
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 1px;
-}
-
-.tag.hot { border-color: var(--red); color: var(--red); background: rgba(255,51,51,0.04); }
-.tag.free { border-color: #00cc66; color: #00aa55; background: rgba(0,204,102,0.04); }
-
-/* Hero Waitlist Form */
-.hero-waitlist {
-  display: flex;
-  gap: 0;
-  max-width: 440px;
-}
-
-.hero-waitlist input {
-  flex: 1;
-  padding: 16px 20px;
-  border: 2px solid var(--ink);
-  border-right: none;
-  font-family: 'DM Mono', monospace;
-  font-size: 14px;
-  background: white;
-  outline: none;
-  min-width: 0;
-}
-
-.hero-waitlist input::placeholder { color: #bbb; }
-
-.hero-waitlist input:focus { border-color: var(--blue); }
-
-.hero-waitlist button {
-  background: var(--ink);
-  color: var(--accent);
-  border: 2px solid var(--ink);
-  padding: 16px 28px;
-  font-family: 'Syne', sans-serif;
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  cursor: pointer;
-  white-space: nowrap;
+  font-weight: 500;
+  color: var(--text2);
+  border-radius: 30px;
   transition: all 0.2s;
 }
 
-.hero-waitlist button:hover { background: var(--blue); border-color: var(--blue); }
+.nav-link:hover { color: var(--text); background: rgba(255,255,255,0.06); }
 
-/* Hero right — interactive demo */
-.hero-demo {
-  position: relative;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  aspect-ratio: 4/3;
+.nav-cta {
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--lime);
+  color: var(--bg);
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: var(--font);
+}
+
+.nav-cta:hover { transform: scale(1.04); filter: brightness(1.1); }
+
+/* ══════════════════════════════════════════
+   HERO — full-dark, massive type, live sim
+   ══════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding: 120px 48px 80px;
+  position: relative;
   overflow: hidden;
 }
 
-.demo-glow {
+/* Gradient orbs */
+.hero::before {
+  content: '';
   position: absolute;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(ellipse, rgba(232,255,0,0.08) 0%, transparent 70%);
+  top: -200px;
+  right: -100px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(ellipse, rgba(198,241,53,0.07) 0%, transparent 65%);
   pointer-events: none;
-  animation: glow-breathe 3s ease-in-out infinite;
 }
 
-@keyframes glow-breathe {
-  0%,100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -300px;
+  left: -200px;
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(ellipse, rgba(255,107,53,0.04) 0%, transparent 65%);
+  pointer-events: none;
 }
 
-.demo-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 4px;
-  color: rgba(255,255,255,0.25);
-  margin-bottom: 6px;
+.hero-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 80px;
+  align-items: center;
   position: relative;
 }
 
-.demo-pool {
-  font-size: clamp(42px, 5vw, 64px);
+.hero-text { max-width: 620px; }
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: var(--lime-dim);
+  border-radius: 20px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--lime);
+  letter-spacing: 0.5px;
+  margin-bottom: 28px;
+}
+
+.hero-badge .pulse {
+  width: 6px; height: 6px;
+  background: var(--lime);
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.4; transform:scale(0.8); }
+}
+
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(52px, 6.5vw, 82px);
   font-weight: 800;
+  line-height: 0.92;
   letter-spacing: -3px;
-  color: var(--accent);
-  text-shadow: 0 0 40px rgba(232,255,0,0.3);
   margin-bottom: 24px;
+}
+
+.hero h1 .line2 { color: var(--lime); }
+.hero h1 .line3 { color: var(--text2); }
+
+.hero-desc {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text2);
+  max-width: 460px;
+  margin-bottom: 36px;
+}
+
+.hero-desc strong { color: var(--text); font-weight: 600; }
+
+.hero-email-row {
+  display: flex;
+  gap: 0;
+  max-width: 420px;
+  margin-bottom: 20px;
+}
+
+.hero-email-row input {
+  flex: 1;
+  padding: 15px 18px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-right: none;
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.hero-email-row input::placeholder { color: var(--text3); }
+.hero-email-row input:focus { border-color: var(--lime); }
+
+.hero-email-row button {
+  padding: 15px 24px;
+  background: var(--lime);
+  color: var(--bg);
+  border: 1px solid var(--lime);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.hero-email-row button:hover { filter: brightness(1.1); }
+
+.hero-proof {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text3);
+}
+
+.hero-proof .count {
+  color: var(--lime);
+  font-weight: 500;
+}
+
+.hero-avatars {
+  display: flex;
+}
+
+.hero-avatars .av {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+  margin-left: -8px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-avatars .av:first-child { margin-left: 0; }
+
+/* ── LIVE SIM CARD ── */
+.sim-card {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  overflow: hidden;
   position: relative;
 }
 
-.demo-timer {
-  font-family: 'Syne Mono', monospace;
-  font-size: clamp(64px, 8vw, 100px);
-  color: white;
-  line-height: 1;
-  margin-bottom: 24px;
+.sim-header {
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.sim-sponsor {
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sim-live-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #00e676;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  letter-spacing: 1px;
+}
+
+.sim-live-badge .dot {
+  width: 5px; height: 5px;
+  background: #00e676;
+  border-radius: 50%;
+  animation: pulse 1s infinite;
+}
+
+.sim-body {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
+}
+
+.sim-glow {
+  position: absolute;
+  width: 200px; height: 200px;
+  background: radial-gradient(ellipse, rgba(198,241,53,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.sim-pool-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 3px;
+  margin-bottom: 4px;
+}
+
+.sim-pool {
+  font-family: var(--display);
+  font-size: 44px;
+  font-weight: 800;
+  color: var(--lime);
+  letter-spacing: -2px;
+  text-shadow: 0 0 30px rgba(198,241,53,0.2);
+  margin-bottom: 20px;
+}
+
+.sim-timer {
+  font-family: var(--mono);
+  font-size: 72px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 8px;
   transition: color 0.3s;
 }
 
-.demo-timer.warn { color: #ff8800; }
-.demo-timer.danger { color: var(--red); animation: danger-shake 0.08s infinite; }
+.sim-timer.warn { color: var(--orange); }
+.sim-timer.danger { color: var(--magenta); animation: shake 0.1s infinite; }
 
-@keyframes danger-shake {
-  0%,100% { transform: translateX(0); }
-  33% { transform: translateX(-2px); }
-  66% { transform: translateX(2px); }
+@keyframes shake {
+  0%,100% { transform:translateX(0); }
+  25% { transform:translateX(-2px); }
+  75% { transform:translateX(2px); }
 }
 
-.demo-btn-wrap { position: relative; }
+.sim-timer-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
 
-.demo-ring {
-  position: absolute;
+.sim-timer-bar {
+  width: 100%;
+  height: 2px;
+  background: var(--border);
+  margin-bottom: 24px;
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.sim-timer-bar-fill {
+  height: 100%;
+  background: var(--lime);
+  box-shadow: 0 0 8px rgba(198,241,53,0.4);
+  transition: width 0.95s linear, background 0.3s;
+  border-radius: 1px;
+}
+
+.sim-btn {
+  width: 100px; height: 100px;
   border-radius: 50%;
-  border: 1px solid rgba(232,255,0,0.15);
-  inset: -14px;
-  animation: ring-out 2.5s ease-out infinite;
-}
-
-.demo-ring:nth-child(2) {
-  inset: -30px;
-  animation-delay: 0.7s;
-  border-color: rgba(232,255,0,0.07);
-}
-
-@keyframes ring-out {
-  0% { transform: scale(0.85); opacity: 0; }
-  40% { opacity: 1; }
-  100% { transform: scale(1.1); opacity: 0; }
-}
-
-.demo-click-btn {
-  position: relative;
-  z-index: 2;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at 35% 30%, #2a2a00, #111100);
-  border: 2px solid var(--accent);
-  box-shadow: 0 0 0 4px rgba(232,255,0,0.08), 0 0 50px rgba(232,255,0,0.2);
+  background: linear-gradient(135deg, #1a1f10, #0f1108);
+  border: 2px solid var(--lime);
+  box-shadow: 0 0 0 4px var(--lime-dim), 0 0 40px rgba(198,241,53,0.15);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -314,790 +406,861 @@ nav {
   gap: 2px;
   transition: transform 0.08s, box-shadow 0.08s;
   user-select: none;
+  margin-bottom: 20px;
 }
 
-.demo-click-btn:hover {
-  box-shadow: 0 0 0 6px rgba(232,255,0,0.12), 0 0 70px rgba(232,255,0,0.35);
-  transform: scale(1.05);
+.sim-btn:hover {
+  box-shadow: 0 0 0 6px rgba(198,241,53,0.15), 0 0 60px rgba(198,241,53,0.25);
+  transform: scale(1.06);
 }
 
-.demo-click-btn:active { transform: scale(0.92); }
+.sim-btn:active { transform: scale(0.92); }
 
-.demo-click-btn .btn-label {
-  font-family: 'Syne', sans-serif;
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 3px;
-  color: var(--accent);
-}
-
-.demo-click-btn .btn-sub {
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  color: rgba(232,255,0,0.5);
-  letter-spacing: 1px;
-}
-
-.demo-badge {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
+.sim-btn-label {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--lime);
   letter-spacing: 2px;
-  color: #00cc66;
+}
+
+.sim-btn-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: rgba(198,241,53,0.45);
+}
+
+.sim-footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
   display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.demo-badge .dot {
-  width: 6px;
-  height: 6px;
-  background: #00cc66;
-  border-radius: 50%;
-  animation: blink 1.2s infinite;
-}
-
-@keyframes blink {
-  0%,100% { opacity: 1; }
-  50% { opacity: 0.2; }
-}
-
-.demo-feed {
-  position: absolute;
-  bottom: 16px;
-  left: 16px;
-  right: 16px;
-  font-family: 'DM Mono', monospace;
+  justify-content: space-between;
+  font-family: var(--mono);
   font-size: 10px;
-  color: rgba(255,255,255,0.35);
+  color: var(--text3);
 }
 
-.demo-feed-item {
-  padding: 4px 0;
+.sim-feed {
+  padding: 0 20px 14px;
+  min-height: 48px;
+}
+
+.sim-feed-item {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  padding: 3px 0;
   opacity: 0;
-  animation: slide-in 0.3s forwards;
+  animation: feed-in 0.3s forwards;
 }
 
-.demo-feed-item span { color: rgba(255,255,255,0.7); }
+.sim-feed-item .who { color: var(--text2); }
+.sim-feed-item .you { color: var(--lime); }
 
-@keyframes slide-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+@keyframes feed-in {
+  from { opacity:0; transform:translateX(6px); }
+  to { opacity:1; transform:translateX(0); }
 }
 
-/* ═══════════════════════════════
-   HOW IT WORKS
-═══════════════════════════════ */
-.how-section {
-  border-bottom: 1px solid var(--border);
+/* ══════════════════════════════════════════
+   SECTION UTILITY
+   ══════════════════════════════════════════ */
+.section-dark { background: var(--bg); }
+.section-darker { background: var(--bg2); }
+.section-darkest { background: #070709; }
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px;
 }
 
-.how-section-header {
-  padding: 60px 48px 0;
-  text-align: center;
-}
-
-.section-label {
-  font-family: 'DM Mono', monospace;
+.sec-label {
+  font-family: var(--mono);
   font-size: 11px;
-  letter-spacing: 4px;
-  color: var(--muted);
+  letter-spacing: 3px;
+  color: var(--text3);
   text-transform: uppercase;
   margin-bottom: 12px;
 }
 
-.section-heading {
-  font-size: clamp(32px, 4vw, 52px);
+.sec-title {
+  font-family: var(--display);
+  font-size: clamp(32px, 4vw, 48px);
   font-weight: 800;
   letter-spacing: -2px;
   line-height: 1;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
-.section-sub {
-  font-family: 'DM Mono', monospace;
-  font-size: 14px;
-  color: var(--muted);
-  font-weight: 300;
-  max-width: 500px;
-  margin: 0 auto;
+.sec-sub {
+  font-size: 16px;
+  color: var(--text2);
+  line-height: 1.6;
+  max-width: 480px;
 }
 
-.how-strip {
+/* ══════════════════════════════════════════
+   HOW IT WORKS — horizontal scrolling steps
+   ══════════════════════════════════════════ */
+.how {
+  padding: 100px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.how .container { max-width: none; padding: 0 48px; }
+
+.how-header { margin-bottom: 48px; }
+
+.how-track {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  margin-top: 48px;
-  border-top: 1px solid var(--border);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
-.how-step {
-  padding: 40px 32px;
-  border-right: 1px solid var(--border);
+.how-card {
+  background: var(--bg2);
+  padding: 36px 28px;
   position: relative;
   transition: background 0.2s;
 }
 
-.how-step:last-child { border-right: none; }
-.how-step:hover { background: rgba(232,255,0,0.04); }
+.how-card:hover { background: var(--bg3); }
 
-.step-num {
-  font-family: 'Syne Mono', monospace;
-  font-size: 48px;
-  font-weight: 400;
-  color: var(--border);
-  line-height: 1;
+.how-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 2px;
   margin-bottom: 16px;
 }
 
-.step-icon {
-  font-size: 32px;
-  margin-bottom: 12px;
+.how-icon {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 18px;
 }
 
-.step-title {
+.how-card:nth-child(1) .how-icon { background: rgba(0,229,255,0.1); }
+.how-card:nth-child(2) .how-icon { background: rgba(198,241,53,0.1); }
+.how-card:nth-child(3) .how-icon { background: rgba(255,107,53,0.1); }
+.how-card:nth-child(4) .how-icon { background: rgba(255,215,0,0.1); }
+
+.how-title {
   font-size: 18px;
-  font-weight: 800;
+  font-weight: 700;
   margin-bottom: 10px;
   letter-spacing: -0.3px;
 }
 
-.step-desc {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  color: var(--muted);
+.how-desc {
+  font-size: 13px;
+  color: var(--text2);
   line-height: 1.7;
-  font-weight: 300;
 }
 
-.step-badge {
+.how-tag {
   display: inline-block;
-  background: var(--accent);
-  color: var(--ink);
-  font-family: 'DM Mono', monospace;
+  margin-top: 16px;
+  padding: 4px 10px;
+  font-family: var(--mono);
   font-size: 10px;
   font-weight: 500;
-  padding: 3px 8px;
-  margin-top: 14px;
   letter-spacing: 1px;
+  border-radius: 4px;
 }
 
-/* ═══════════════════════════════
-   SHOWCASE — SCREEN MOCKUPS
-═══════════════════════════════ */
+.how-card:nth-child(1) .how-tag { background: rgba(0,229,255,0.1); color: var(--cyan); }
+.how-card:nth-child(2) .how-tag { background: var(--lime-dim); color: var(--lime); }
+.how-card:nth-child(3) .how-tag { background: rgba(255,107,53,0.1); color: var(--orange); }
+.how-card:nth-child(4) .how-tag { background: rgba(255,215,0,0.1); color: var(--gold); }
+
+/* ══════════════════════════════════════════
+   SHOWCASE — phone frames
+   ══════════════════════════════════════════ */
 .showcase {
-  padding: 80px 48px;
+  padding: 100px 0;
   border-bottom: 1px solid var(--border);
-  background: var(--ink);
-  color: white;
+  position: relative;
+  overflow: hidden;
 }
 
-.showcase .section-label { color: rgba(255,255,255,0.3); }
-.showcase .section-heading { color: white; }
-.showcase .section-sub { color: rgba(255,255,255,0.4); }
+.showcase::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(ellipse, rgba(198,241,53,0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
 
 .showcase-header {
   text-align: center;
   margin-bottom: 60px;
 }
 
-.showcase-screens {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  max-width: 1100px;
+.showcase-header .sec-sub { margin: 0 auto; }
+
+.phones {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  perspective: 1000px;
+}
+
+.phone {
+  width: 260px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: transform 0.4s;
+  flex-shrink: 0;
+}
+
+.phone:nth-child(1) { transform: rotateY(4deg); }
+.phone:nth-child(3) { transform: rotateY(-4deg); }
+.phone:hover { transform: rotateY(0) translateY(-8px) !important; }
+
+.phone-notch {
+  width: 80px;
+  height: 22px;
+  background: var(--bg);
   margin: 0 auto;
+  border-radius: 0 0 12px 12px;
 }
 
-.screen-card {
-  background: var(--surface);
-  border: 1px solid var(--dark-border);
-  overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
+.phone-screen { padding: 16px; min-height: 440px; }
+
+.phone-label {
+  text-align: center;
+  padding: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  letter-spacing: 0.5px;
 }
 
-.screen-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 24px 60px rgba(0,0,0,0.4);
-}
-
-.screen-card-preview {
-  aspect-ratio: 9/16;
-  max-height: 400px;
-  overflow: hidden;
-  position: relative;
-}
-
-.screen-card-content {
-  padding: 24px;
-}
-
-.screen-card-title {
-  font-size: 16px;
-  font-weight: 800;
-  margin-bottom: 6px;
-  letter-spacing: -0.3px;
-}
-
-.screen-card-desc {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: rgba(255,255,255,0.4);
-  line-height: 1.7;
-}
-
-/* Phone mockup inside screen card */
-.phone-mock {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.phone-status-bar {
-  padding: 8px 16px;
-  display: flex;
-  justify-content: space-between;
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  color: rgba(255,255,255,0.3);
-}
-
-/* Lobby mock */
-.mock-lobby {
-  padding: 16px;
-  flex: 1;
-}
-
-.mock-lobby-title {
+/* Phone screen content */
+.ps-lobby-title {
+  font-family: var(--display);
   font-size: 20px;
   font-weight: 800;
-  color: white;
-  margin-bottom: 4px;
-  letter-spacing: -1px;
+  margin-bottom: 3px;
 }
 
-.mock-lobby-sub {
-  font-family: 'DM Mono', monospace;
+.ps-lobby-sub {
+  font-family: var(--mono);
   font-size: 9px;
-  color: rgba(255,255,255,0.3);
+  color: var(--text3);
   letter-spacing: 1px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
-.mock-game-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid var(--dark-border);
-  padding: 14px;
+.ps-game {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
   margin-bottom: 8px;
 }
 
-.mock-card-top {
+.ps-game-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
-.mock-sponsor {
+.ps-game-sponsor {
   font-size: 11px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.8);
+  font-weight: 600;
 }
 
-.mock-live {
-  font-family: 'DM Mono', monospace;
+.ps-game-live {
+  font-family: var(--mono);
   font-size: 8px;
-  color: #00cc66;
-  letter-spacing: 2px;
-}
-
-.mock-pool {
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -1px;
-  color: white;
-  margin-bottom: 4px;
-}
-
-.mock-meta {
-  font-family: 'DM Mono', monospace;
-  font-size: 8px;
-  color: rgba(255,255,255,0.3);
+  color: #00e676;
   letter-spacing: 1px;
 }
 
-/* Game mock */
-.mock-game {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  position: relative;
+.ps-game-pool {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 4px;
 }
 
-.mock-game-pool-label {
-  font-family: 'DM Mono', monospace;
+.ps-game-meta {
+  font-family: var(--mono);
   font-size: 8px;
+  color: var(--text3);
+  letter-spacing: 0.5px;
+}
+
+/* Game screen */
+.ps-gr { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
+
+.ps-gr-pool-label {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--text3);
   letter-spacing: 3px;
-  color: rgba(255,255,255,0.25);
   margin-bottom: 2px;
 }
 
-.mock-game-pool {
+.ps-gr-pool {
+  font-family: var(--display);
   font-size: 32px;
   font-weight: 800;
-  color: var(--accent);
+  color: var(--lime);
   letter-spacing: -2px;
-  text-shadow: 0 0 30px rgba(232,255,0,0.3);
   margin-bottom: 20px;
 }
 
-.mock-timer {
-  font-family: 'Syne Mono', monospace;
-  font-size: 52px;
-  color: white;
+.ps-gr-timer {
+  font-family: var(--mono);
+  font-size: 56px;
+  color: var(--text);
   margin-bottom: 20px;
 }
 
-.mock-click-btn {
-  width: 80px;
-  height: 80px;
+.ps-gr-btn {
+  width: 72px; height: 72px;
   border-radius: 50%;
-  background: radial-gradient(ellipse at 35% 30%, #2a2a00, #111100);
-  border: 2px solid var(--accent);
-  box-shadow: 0 0 0 3px rgba(232,255,0,0.08), 0 0 30px rgba(232,255,0,0.2);
+  background: linear-gradient(135deg, #1a1f10, #0f1108);
+  border: 2px solid var(--lime);
+  box-shadow: 0 0 20px rgba(198,241,53,0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Syne', sans-serif;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 700;
+  color: var(--lime);
   letter-spacing: 2px;
-  color: var(--accent);
 }
 
-/* Win mock */
-.mock-win {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: rgba(0,0,0,0.5);
-}
+/* Win screen */
+.ps-win { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; }
 
-.mock-win-emoji { font-size: 48px; margin-bottom: 12px; }
+.ps-win-trophy { font-size: 48px; margin-bottom: 12px; }
 
-.mock-win-title {
-  font-size: 28px;
+.ps-win-title {
+  font-family: var(--display);
+  font-size: 24px;
   font-weight: 800;
-  color: var(--accent);
-  letter-spacing: -1px;
-  text-shadow: 0 0 40px rgba(232,255,0,0.4);
+  color: var(--lime);
   margin-bottom: 8px;
 }
 
-.mock-win-amount {
-  font-family: 'Syne Mono', monospace;
+.ps-win-amt {
+  font-family: var(--mono);
   font-size: 36px;
-  color: white;
+  font-weight: 500;
   margin-bottom: 4px;
 }
 
-.mock-win-sub {
-  font-family: 'DM Mono', monospace;
+.ps-win-sub {
+  font-family: var(--mono);
   font-size: 9px;
-  color: rgba(255,255,255,0.35);
+  color: var(--text3);
   letter-spacing: 2px;
   margin-bottom: 20px;
 }
 
-.mock-win-btn {
-  background: var(--accent);
-  color: var(--ink);
+.ps-win-btn {
+  background: var(--lime);
+  color: var(--bg);
   border: none;
-  padding: 10px 24px;
-  font-family: 'Syne', sans-serif;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1px;
+  padding: 10px 22px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 700;
 }
 
-/* ═══════════════════════════════
-   FOR SPONSORS
-═══════════════════════════════ */
-.sponsors-section {
-  padding: 80px 48px;
+/* ══════════════════════════════════════════
+   SPONSORS VALUE PROP
+   ══════════════════════════════════════════ */
+.sponsors {
+  padding: 100px 0;
   border-bottom: 1px solid var(--border);
 }
 
-.sponsors-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
+.sponsors-header { margin-bottom: 48px; }
 
 .sponsors-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
+  gap: 1px;
   background: var(--border);
-  max-width: 900px;
-  margin: 0 auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
-.sponsor-card {
-  background: white;
-  padding: 36px 28px;
-  text-align: center;
+.sp-card {
+  background: var(--bg2);
+  padding: 32px 24px;
+  transition: background 0.2s;
 }
 
-.sponsor-card-icon {
-  font-size: 32px;
+.sp-card:hover { background: var(--bg3); }
+
+.sp-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 16px;
+  background: rgba(198,241,53,0.08);
+}
+
+.sp-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.sp-desc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════════════════
+   WAITLIST — the big one
+   ══════════════════════════════════════════ */
+.waitlist {
+  padding: 100px 0;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.waitlist::before {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(198,241,53,0.04) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.waitlist-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.waitlist-left {}
+
+.waitlist-left .sec-title { margin-bottom: 16px; }
+
+.wl-perks {
+  list-style: none;
+  margin-top: 28px;
+}
+
+.wl-perks li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 14px;
+  color: var(--text2);
+}
+
+.wl-perks li .icon {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--lime-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.wl-counter {
+  margin-top: 36px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+}
+
+.wl-counter-num {
+  font-family: var(--display);
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--lime);
+  letter-spacing: -1px;
+}
+
+.wl-counter-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 1px;
+  line-height: 1.5;
+}
+
+/* Form */
+.wl-form {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 32px;
+}
+
+.wl-form-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.wl-field {
   margin-bottom: 14px;
 }
 
-.sponsor-card-title {
-  font-size: 15px;
-  font-weight: 800;
-  margin-bottom: 8px;
-  letter-spacing: -0.3px;
-}
-
-.sponsor-card-desc {
-  font-family: 'DM Mono', monospace;
+.wl-field label {
+  display: block;
+  font-family: var(--mono);
   font-size: 11px;
-  color: var(--muted);
-  line-height: 1.7;
-  font-weight: 300;
+  color: var(--text3);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
 }
 
-/* ═══════════════════════════════
-   WAITLIST SECTION
-═══════════════════════════════ */
-.waitlist-section {
-  padding: 100px 48px;
-  border-bottom: 1px solid var(--border);
-  background: var(--ink);
-  color: white;
-  text-align: center;
-}
-
-.waitlist-section .section-label { color: rgba(255,255,255,0.3); }
-.waitlist-section .section-heading { color: white; margin-bottom: 12px; }
-.waitlist-section .section-sub { color: rgba(255,255,255,0.4); margin-bottom: 48px; }
-
-.waitlist-form {
-  max-width: 520px;
-  margin: 0 auto;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.form-row.full {
-  grid-template-columns: 1fr;
-}
-
-.waitlist-form input,
-.waitlist-form select {
+.wl-field input,
+.wl-field select {
   width: 100%;
-  padding: 16px 20px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: white;
-  font-family: 'DM Mono', monospace;
+  padding: 13px 16px;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--mono);
   font-size: 13px;
   outline: none;
   transition: border-color 0.2s;
 }
 
-.waitlist-form input::placeholder { color: rgba(255,255,255,0.25); }
+.wl-field input::placeholder { color: var(--text3); }
+.wl-field input:focus, .wl-field select:focus { border-color: var(--lime); }
 
-.waitlist-form input:focus,
-.waitlist-form select:focus {
-  border-color: var(--accent);
-}
-
-.waitlist-form select {
+.wl-field select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236a6a80' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6' fill='%2355556a'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 16px center;
-  padding-right: 40px;
-}
-
-.waitlist-form select option {
-  background: var(--surface);
-  color: white;
-}
-
-.waitlist-submit {
-  width: 100%;
-  padding: 18px;
-  background: var(--accent);
-  color: var(--ink);
-  border: none;
-  font-family: 'Syne', sans-serif;
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: 1px;
+  background-position: right 14px center;
   cursor: pointer;
-  margin-top: 8px;
-  transition: transform 0.1s, opacity 0.2s;
 }
 
-.waitlist-submit:hover { transform: translateY(-2px); }
-.waitlist-submit:active { transform: scale(0.98); }
+.wl-field select option { background: var(--bg2); color: var(--text); }
 
-.waitlist-note {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: rgba(255,255,255,0.25);
-  margin-top: 16px;
-  letter-spacing: 0.5px;
+.wl-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
 }
 
-/* Success state */
-.waitlist-success {
+.wl-submit {
+  width: 100%;
+  padding: 15px;
+  background: var(--lime);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: all 0.15s;
+}
+
+.wl-submit:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+.wl-note {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* Success */
+.wl-success {
   display: none;
   text-align: center;
-  padding: 40px 0;
+  padding: 48px 32px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
 }
 
-.waitlist-success.show { display: block; }
+.wl-success.show { display: block; }
 
-.waitlist-success .check {
-  font-size: 48px;
-  margin-bottom: 16px;
-}
+.wl-success-icon { font-size: 48px; margin-bottom: 16px; }
 
-.waitlist-success h3 {
-  font-size: 28px;
+.wl-success h3 {
+  font-family: var(--display);
+  font-size: 24px;
   font-weight: 800;
-  color: var(--accent);
+  color: var(--lime);
   margin-bottom: 8px;
 }
 
-.waitlist-success p {
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  color: rgba(255,255,255,0.4);
+.wl-success p {
+  font-size: 14px;
+  color: var(--text2);
+  margin-bottom: 24px;
 }
 
-/* Counter */
-.waitlist-counter {
-  margin-top: 48px;
+.wl-share-row {
   display: flex;
-  align-items: center;
+  gap: 10px;
   justify-content: center;
-  gap: 16px;
 }
 
-.counter-num {
-  font-size: 42px;
-  font-weight: 800;
-  color: var(--accent);
-  letter-spacing: -2px;
+.wl-share-btn {
+  padding: 10px 18px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s;
 }
 
-.counter-label {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: rgba(255,255,255,0.3);
-  letter-spacing: 2px;
-  text-align: left;
-}
+.wl-share-btn:hover { border-color: var(--lime); color: var(--lime); }
 
-/* ═══════════════════════════════
-   SURVEY SECTION
-═══════════════════════════════ */
-.survey-section {
-  padding: 80px 48px;
+/* ══════════════════════════════════════════
+   SURVEY
+   ══════════════════════════════════════════ */
+.survey {
+  padding: 80px 0;
   border-bottom: 1px solid var(--border);
 }
 
 .survey-header {
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 12px;
 }
+
+.survey-header .sec-sub { margin: 0 auto; }
 
 .survey-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  margin-top: 16px;
+  gap: 8px;
+  margin-top: 20px;
   cursor: pointer;
+  padding: 10px 20px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 30px;
+  display: inline-flex;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.2s;
 }
 
+.survey-toggle:hover { border-color: var(--lime); }
+
 .survey-toggle-text {
-  font-family: 'DM Mono', monospace;
+  font-family: var(--mono);
   font-size: 12px;
-  color: var(--blue);
+  color: var(--lime);
   letter-spacing: 1px;
 }
 
 .survey-toggle-arrow {
+  font-size: 12px;
+  color: var(--lime);
   transition: transform 0.3s;
-  font-size: 14px;
-  color: var(--blue);
 }
 
 .survey-toggle.open .survey-toggle-arrow { transform: rotate(180deg); }
 
-.survey-content {
-  max-width: 640px;
+.survey-body {
+  max-width: 600px;
   margin: 0 auto;
   display: none;
+  padding-top: 40px;
 }
 
-.survey-content.show { display: block; }
+.survey-body.show { display: block; }
 
-.survey-question {
+.sq {
   margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
 }
 
-.survey-q-label {
-  font-size: 15px;
-  font-weight: 700;
-  margin-bottom: 12px;
+.sq:last-of-type { border-bottom: none; }
+
+.sq-label {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
-.survey-q-num {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--muted);
+.sq-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
   letter-spacing: 1px;
 }
 
-.survey-options {
+.sq-text {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.sq-options {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.survey-option {
-  position: relative;
-}
+.sq-opt { position: relative; }
 
-.survey-option input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
+.sq-opt input { position: absolute; opacity: 0; pointer-events: none; }
 
-.survey-option label {
+.sq-opt label {
   display: block;
   padding: 10px 18px;
-  border: 1px solid var(--border);
-  font-family: 'DM Mono', monospace;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  font-family: var(--mono);
   font-size: 12px;
-  color: var(--muted);
+  color: var(--text2);
   cursor: pointer;
   transition: all 0.15s;
-  letter-spacing: 0.5px;
 }
 
-.survey-option input:checked + label {
-  background: var(--ink);
-  color: var(--accent);
-  border-color: var(--ink);
+.sq-opt input:checked + label {
+  background: var(--lime-dim);
+  border-color: var(--lime);
+  color: var(--lime);
 }
 
-.survey-option label:hover {
-  border-color: var(--ink);
-  color: var(--ink);
-}
+.sq-opt label:hover { border-color: var(--text3); color: var(--text); }
 
-.survey-textarea {
-  width: 100%;
-  padding: 16px 20px;
-  border: 1px solid var(--border);
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  color: var(--ink);
-  outline: none;
-  resize: vertical;
-  min-height: 100px;
-  transition: border-color 0.2s;
-}
-
-.survey-textarea::placeholder { color: #bbb; }
-.survey-textarea:focus { border-color: var(--blue); }
-
-.survey-range-wrap {
+.sq-range-wrap {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
 }
 
-.survey-range {
+.sq-range-end {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+}
+
+.sq-range {
   flex: 1;
   -webkit-appearance: none;
   height: 3px;
-  background: var(--border);
+  background: var(--bg3);
+  border-radius: 2px;
   outline: none;
 }
 
-.survey-range::-webkit-slider-thumb {
+.sq-range::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
-  background: var(--ink);
+  width: 20px; height: 20px;
+  background: var(--lime);
   border-radius: 50%;
   cursor: pointer;
+  box-shadow: 0 0 10px rgba(198,241,53,0.3);
 }
 
-.survey-range-val {
-  font-family: 'DM Mono', monospace;
-  font-size: 14px;
+.sq-range-val {
+  font-family: var(--mono);
+  font-size: 20px;
   font-weight: 500;
-  min-width: 60px;
+  color: var(--lime);
+  min-width: 30px;
   text-align: center;
-  color: var(--ink);
 }
+
+.sq-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+  outline: none;
+  resize: vertical;
+  min-height: 90px;
+  transition: border-color 0.2s;
+}
+
+.sq-textarea::placeholder { color: var(--text3); }
+.sq-textarea:focus { border-color: var(--lime); }
 
 .survey-submit-row {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-top: 32px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.survey-note {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
 }
 
 .survey-submit {
-  background: var(--ink);
-  color: var(--paper);
+  padding: 12px 28px;
+  background: var(--lime);
+  color: var(--bg);
   border: none;
-  padding: 14px 32px;
-  font-family: 'Syne', sans-serif;
+  border-radius: var(--radius-sm);
+  font-family: var(--font);
   font-size: 14px;
-  font-weight: 800;
-  letter-spacing: 1px;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.15s;
 }
 
-.survey-submit:hover { background: var(--blue); }
-
-.survey-optional-note {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: var(--muted);
-  letter-spacing: 0.5px;
-}
+.survey-submit:hover { filter: brightness(1.1); }
 
 .survey-thanks {
   display: none;
@@ -1108,188 +1271,152 @@ nav {
 .survey-thanks.show { display: block; }
 
 .survey-thanks h3 {
-  font-size: 24px;
-  font-weight: 800;
-  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
 }
 
 .survey-thanks p {
-  font-family: 'DM Mono', monospace;
   font-size: 13px;
-  color: var(--muted);
+  color: var(--text2);
 }
 
-/* ═══════════════════════════════
+/* ══════════════════════════════════════════
    FAQ
-═══════════════════════════════ */
-.faq-section {
-  padding: 80px 48px;
+   ══════════════════════════════════════════ */
+.faq {
+  padding: 80px 0;
   border-bottom: 1px solid var(--border);
-  max-width: 720px;
-  margin: 0 auto;
 }
+
+.faq .container { max-width: 680px; }
 
 .faq-header {
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 }
 
 .faq-item {
   border-bottom: 1px solid var(--border);
 }
 
-.faq-question {
+.faq-q {
   width: 100%;
   background: none;
   border: none;
-  padding: 24px 0;
-  font-family: 'Syne', sans-serif;
-  font-size: 16px;
-  font-weight: 700;
+  padding: 20px 0;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
   text-align: left;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--ink);
 }
 
-.faq-question .faq-arrow {
-  font-size: 18px;
-  transition: transform 0.3s;
-  color: var(--muted);
+.faq-q .arrow {
+  font-size: 16px;
+  color: var(--text3);
+  transition: transform 0.3s, color 0.2s;
 }
 
-.faq-item.open .faq-arrow { transform: rotate(45deg); }
+.faq-item.open .arrow { transform: rotate(45deg); color: var(--lime); }
 
-.faq-answer {
+.faq-a {
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease;
 }
 
-.faq-answer-inner {
-  padding: 0 0 24px;
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.8;
-  font-weight: 300;
+.faq-a-inner {
+  padding: 0 0 20px;
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.7;
 }
 
-/* ═══════════════════════════════
+/* ══════════════════════════════════════════
    FOOTER
-═══════════════════════════════ */
-footer {
-  background: var(--ink);
-  color: rgba(255,255,255,0.4);
-  padding: 48px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 40px;
-  align-items: start;
-}
-
-.footer-left {}
-
-.footer-logo {
-  font-family: 'Syne Mono', monospace;
-  font-size: 20px;
-  color: white;
-  margin-bottom: 8px;
-}
-
-.footer-logo em {
-  background: var(--accent);
-  color: var(--ink);
-  font-style: normal;
-  padding: 2px 5px;
-  margin-right: 2px;
-}
-
-.footer-tagline {
-  font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  color: rgba(255,255,255,0.25);
-  letter-spacing: 1px;
-  margin-bottom: 20px;
-}
-
-.footer-copy {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: rgba(255,255,255,0.15);
-}
-
-.footer-links {
+   ══════════════════════════════════════════ */
+.foot {
+  padding: 40px 48px;
   display: flex;
-  gap: 28px;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.footer-links a {
-  font-family: 'DM Mono', monospace;
+.foot-logo {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--lime);
+}
+
+.foot-copy {
+  font-family: var(--mono);
   font-size: 11px;
-  color: rgba(255,255,255,0.3);
-  text-decoration: none;
-  letter-spacing: 1px;
+  color: var(--text3);
+}
+
+.foot-links {
+  display: flex;
+  gap: 24px;
+}
+
+.foot-links a {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
   transition: color 0.2s;
 }
 
-.footer-links a:hover { color: var(--accent); }
+.foot-links a:hover { color: var(--lime); }
 
-/* ═══════════════════════════════
+/* ══════════════════════════════════════════
    RESPONSIVE
-═══════════════════════════════ */
+   ══════════════════════════════════════════ */
 @media (max-width: 900px) {
-  nav { padding: 16px 24px; }
-  .nav-links { display: none; }
-  .hero {
+  .nav { top: 12px; padding: 4px 6px; }
+  .nav-link { display: none; }
+  .container { padding: 0 24px; }
+  .hero { padding: 100px 24px 60px; }
+  .hero-inner {
     grid-template-columns: 1fr;
-    padding: 60px 24px 40px;
-    min-height: auto;
     gap: 40px;
   }
-  .hero-demo { min-height: 360px; }
-  .how-strip {
-    grid-template-columns: 1fr;
-  }
-  .how-step {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-  .showcase-screens {
-    grid-template-columns: 1fr;
-    max-width: 360px;
-  }
-  .sponsors-grid {
-    grid-template-columns: 1fr;
-  }
-  .waitlist-section, .survey-section, .faq-section { padding: 60px 24px; }
-  .form-row { grid-template-columns: 1fr; }
-  .hero-waitlist { flex-direction: column; }
-  .hero-waitlist input { border-right: 2px solid var(--ink); border-bottom: none; }
-  footer {
-    grid-template-columns: 1fr;
-    padding: 40px 24px;
-  }
-  .footer-links { flex-wrap: wrap; gap: 16px; }
+  .sim-card { max-width: 380px; }
+  .how-track { grid-template-columns: 1fr 1fr; }
+  .how .container { padding: 0 24px; }
+  .phones { flex-direction: column; align-items: center; gap: 24px; }
+  .phone { transform: none !important; }
+  .sponsors-grid { grid-template-columns: 1fr; }
+  .waitlist-inner { grid-template-columns: 1fr; gap: 40px; }
+  .wl-row { grid-template-columns: 1fr; }
+  .hero-email-row { flex-direction: column; max-width: 100%; }
+  .hero-email-row input { border-right: 1px solid var(--border2); border-radius: var(--radius-sm); }
+  .hero-email-row button { border-radius: var(--radius-sm); }
+  .foot { flex-direction: column; gap: 20px; text-align: center; }
 }
 
-@media (max-width: 480px) {
-  .hero-left h1 { font-size: 40px; letter-spacing: -2px; }
-  .counter-num { font-size: 32px; }
-  .demo-pool { font-size: 36px; }
-  .demo-timer { font-size: 52px; }
+@media (max-width: 600px) {
+  .how-track { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 42px; letter-spacing: -2px; }
 }
 
-/* Animations */
-.fade-in {
+/* ══════════════════════════════════════════
+   REVEAL ANIMATION
+   ══════════════════════════════════════════ */
+.reveal {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(24px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.fade-in.visible {
+.reveal.vis {
   opacity: 1;
   transform: translateY(0);
 }
@@ -1297,715 +1424,690 @@ footer {
 </head>
 <body>
 
-<!-- ═══ NAV ═══ -->
-<nav>
-  <a href="#" class="nav-logo"><em>q</em>liqr</a>
-  <div class="nav-right">
-    <ul class="nav-links">
-      <li><a href="#how">HOW IT WORKS</a></li>
-      <li><a href="#showcase">SHOWCASE</a></li>
-      <li><a href="#sponsors">FOR SPONSORS</a></li>
-      <li><a href="#faq">FAQ</a></li>
-    </ul>
-    <a href="#waitlist" class="btn-cta-nav">JOIN WAITLIST</a>
-  </div>
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-logo">qliqr</a>
+  <a href="#how" class="nav-link">How it works</a>
+  <a href="#showcase" class="nav-link">Showcase</a>
+  <a href="#sponsors" class="nav-link">Sponsors</a>
+  <a href="#faq" class="nav-link">FAQ</a>
+  <a href="#waitlist" class="nav-cta">Join Waitlist</a>
 </nav>
 
-<!-- ═══ HERO ═══ -->
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-left">
-    <h1>
-      Watch ads.<br>
-      <span class="accent-word">Get clicks.</span><br>
-      <span class="red-word">Win cash.</span>
-    </h1>
-    <p class="hero-sub">Every second you watch a sponsor's video earns you 1 click. The last person to click before the 30-second timer hits zero wins the entire prize pool. Free. Always.</p>
-    <div class="hero-tags">
-      <div class="tag free">100% FREE TO PLAY</div>
-      <div class="tag hot">REAL CASH PRIZES</div>
-      <div class="tag">NO PURCHASE NEEDED</div>
-    </div>
-    <div class="hero-waitlist" id="heroWaitlist">
-      <input type="email" id="heroEmail" placeholder="your@email.com" autocomplete="email"/>
-      <button onclick="handleHeroSignup()">JOIN WAITLIST</button>
-    </div>
-  </div>
-  <div class="hero-demo">
-    <div class="demo-glow"></div>
-    <div class="demo-badge"><div class="dot"></div> LIVE DEMO</div>
-    <div class="demo-label">PRIZE POOL</div>
-    <div class="demo-pool" id="demoPool">$2,847</div>
-    <div class="demo-timer" id="demoTimer">27</div>
-    <div class="demo-btn-wrap">
-      <div class="demo-ring"></div>
-      <div class="demo-ring"></div>
-      <div class="demo-click-btn" id="demoClickBtn" onclick="handleDemoClick()">
-        <div class="btn-label">CLICK</div>
-        <div class="btn-sub" id="demoClicksLeft">42 LEFT</div>
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge"><div class="pulse"></div> LAUNCHING SOON</div>
+      <h1>
+        The last click<br>
+        <span class="line2">wins everything.</span><br>
+        <span class="line3">For real.</span>
+      </h1>
+      <p class="hero-desc">
+        Watch a sponsor's ad. <strong>Every second = 1 click.</strong>
+        Use your clicks to reset a 30-second timer.
+        When nobody clicks for 30 seconds — the <strong>last clicker takes the entire prize pool</strong>. Zero cost to play.
+      </p>
+      <div class="hero-email-row" id="heroEmailRow">
+        <input type="email" id="heroEmail" placeholder="your@email.com" autocomplete="email"/>
+        <button onclick="heroSignup()">Get Early Access</button>
+      </div>
+      <div class="hero-proof">
+        <div class="hero-avatars">
+          <div class="av" style="background:#2d1f5e;">&#128126;</div>
+          <div class="av" style="background:#1f3d2e;">&#127941;</div>
+          <div class="av" style="background:#3d2f1f;">&#128293;</div>
+          <div class="av" style="background:#1f2d3d;">&#9889;</div>
+        </div>
+        <span><span class="count" id="heroCount">...</span> already on the waitlist</span>
       </div>
     </div>
-    <div class="demo-feed" id="demoFeed"></div>
-  </div>
-</section>
 
-<!-- ═══ HOW IT WORKS ═══ -->
-<section class="how-section" id="how">
-  <div class="how-section-header fade-in">
-    <div class="section-label">HOW IT WORKS</div>
-    <div class="section-heading">Four steps to free cash</div>
-    <p class="section-sub">No sign-up fees. No in-app purchases. Sponsors pay — you play and win.</p>
-  </div>
-  <div class="how-strip">
-    <div class="how-step fade-in">
-      <div class="step-num">01</div>
-      <div class="step-title">Pick a Game</div>
-      <div class="step-desc">Browse live games sponsored by real brands. Each has a growing cash prize pool funded entirely by sponsors.</div>
-      <div class="step-badge">FREE ENTRY</div>
-    </div>
-    <div class="how-step fade-in">
-      <div class="step-num">02</div>
-      <div class="step-title">Watch the Video</div>
-      <div class="step-desc">Watch a short sponsor ad (30-300 sec). Every second you watch earns you 1 click credit. Finish the whole thing for a 10% bonus.</div>
-      <div class="step-badge">1 SEC = 1 CLICK</div>
-    </div>
-    <div class="how-step fade-in">
-      <div class="step-num">03</div>
-      <div class="step-title">Use Your Clicks</div>
-      <div class="step-desc">Enter the game room. A 30-second countdown is always running. Every click resets it back to 30. Timing is everything.</div>
-      <div class="step-badge">STRATEGY MATTERS</div>
-    </div>
-    <div class="how-step fade-in">
-      <div class="step-num">04</div>
-      <div class="step-title">Win Everything</div>
-      <div class="step-desc">When 30 seconds pass with zero clicks, the last person who clicked wins 100% of the prize pool. Instant payout via Stripe.</div>
-      <div class="step-badge">REAL CASH OUT</div>
+    <!-- LIVE SIM -->
+    <div class="sim-card">
+      <div class="sim-header">
+        <div class="sim-sponsor">&#9889; Acme Energy</div>
+        <div class="sim-live-badge"><div class="dot"></div> LIVE</div>
+      </div>
+      <div class="sim-body">
+        <div class="sim-glow"></div>
+        <div class="sim-pool-label">PRIZE POOL</div>
+        <div class="sim-pool" id="simPool">$2,847</div>
+        <div class="sim-timer" id="simTimer">27</div>
+        <div class="sim-timer-label">SECONDS LEFT</div>
+        <div class="sim-timer-bar">
+          <div class="sim-timer-bar-fill" id="simBar" style="width:90%"></div>
+        </div>
+        <div class="sim-btn" id="simBtn" onclick="simClick()">
+          <div class="sim-btn-label">CLICK</div>
+          <div class="sim-btn-sub" id="simClicksLeft">42 left</div>
+        </div>
+      </div>
+      <div class="sim-feed" id="simFeed"></div>
+      <div class="sim-footer">
+        <span>142 players</span>
+        <span>Room #KX82TP</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ SHOWCASE ═══ -->
-<section class="showcase" id="showcase">
-  <div class="showcase-header fade-in">
-    <div class="section-label">SHOWCASE</div>
-    <div class="section-heading">Built for your phone</div>
-    <p class="section-sub">A mobile-first experience designed for one-thumb gameplay. Here's what it looks like.</p>
+<!-- HOW IT WORKS -->
+<section class="how section-darker" id="how">
+  <div class="container">
+    <div class="how-header reveal">
+      <div class="sec-label">HOW IT WORKS</div>
+      <div class="sec-title">Four steps. Zero cost.</div>
+    </div>
   </div>
-  <div class="showcase-screens">
-    <!-- Screen 1: Lobby -->
-    <div class="screen-card fade-in">
-      <div class="screen-card-preview">
-        <div class="phone-mock" style="background: var(--surface);">
-          <div class="phone-status-bar">
-            <span>9:41</span>
-            <span>qliqr</span>
-          </div>
-          <div class="mock-lobby">
-            <div class="mock-lobby-title">Live Games</div>
-            <div class="mock-lobby-sub">12 GAMES LIVE NOW</div>
-            <div class="mock-game-card">
-              <div class="mock-card-top">
-                <span class="mock-sponsor">Nike Running</span>
-                <span class="mock-live">LIVE</span>
-              </div>
-              <div class="mock-pool">$4,280</div>
-              <div class="mock-meta">142 PLAYERS &middot; 23s LEFT</div>
+  <div class="container">
+    <div class="how-track">
+      <div class="how-card reveal">
+        <div class="how-num">01</div>
+        <div class="how-icon">&#127918;</div>
+        <div class="how-title">Pick a Game</div>
+        <div class="how-desc">Browse live games sponsored by real brands. Each one has a cash prize pool that grows with every ad view.</div>
+        <div class="how-tag">FREE ENTRY</div>
+      </div>
+      <div class="how-card reveal">
+        <div class="how-num">02</div>
+        <div class="how-icon">&#9658;</div>
+        <div class="how-title">Watch the Ad</div>
+        <div class="how-desc">Watch a short sponsor video (30-300 sec). Every second earns you 1 click. Finish it all for a 10% bonus.</div>
+        <div class="how-tag">1 SEC = 1 CLICK</div>
+      </div>
+      <div class="how-card reveal">
+        <div class="how-num">03</div>
+        <div class="how-icon">&#128293;</div>
+        <div class="how-title">Click Strategically</div>
+        <div class="how-desc">A 30-second timer is always ticking. Every click resets it. Use your clicks wisely — timing beats speed.</div>
+        <div class="how-tag">STRATEGY > SPEED</div>
+      </div>
+      <div class="how-card reveal">
+        <div class="how-num">04</div>
+        <div class="how-icon">&#128176;</div>
+        <div class="how-title">Win the Pool</div>
+        <div class="how-desc">When 30 seconds pass with zero clicks, the last person who clicked takes 100% of the prize. Instant payout.</div>
+        <div class="how-tag">REAL CASH</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section class="showcase section-dark" id="showcase">
+  <div class="container">
+    <div class="showcase-header reveal">
+      <div class="sec-label">SHOWCASE</div>
+      <div class="sec-title">Built for your thumb</div>
+      <p class="sec-sub">Mobile-first. One-hand gameplay. Every pixel tuned for speed.</p>
+    </div>
+    <div class="phones">
+      <div class="phone reveal">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="ps-lobby-title">Live Games</div>
+          <div class="ps-lobby-sub">8 GAMES LIVE</div>
+          <div class="ps-game">
+            <div class="ps-game-top">
+              <div class="ps-game-sponsor">&#9889; Nike Running</div>
+              <div class="ps-game-live">LIVE</div>
             </div>
-            <div class="mock-game-card">
-              <div class="mock-card-top">
-                <span class="mock-sponsor">Duolingo</span>
-                <span class="mock-live">LIVE</span>
-              </div>
-              <div class="mock-pool">$1,650</div>
-              <div class="mock-meta">89 PLAYERS &middot; 18s LEFT</div>
+            <div class="ps-game-pool">$4,280</div>
+            <div class="ps-game-meta">142 players &middot; 23s left</div>
+          </div>
+          <div class="ps-game">
+            <div class="ps-game-top">
+              <div class="ps-game-sponsor">&#127925; Spotify</div>
+              <div class="ps-game-live">LIVE</div>
             </div>
-            <div class="mock-game-card" style="opacity: 0.6;">
-              <div class="mock-card-top">
-                <span class="mock-sponsor">Spotify Premium</span>
-                <span class="mock-live">LIVE</span>
-              </div>
-              <div class="mock-pool">$820</div>
-              <div class="mock-meta">34 PLAYERS &middot; 27s LEFT</div>
+            <div class="ps-game-pool">$1,650</div>
+            <div class="ps-game-meta">89 players &middot; 18s left</div>
+          </div>
+          <div class="ps-game" style="opacity:0.5">
+            <div class="ps-game-top">
+              <div class="ps-game-sponsor">&#127843; Duolingo</div>
+              <div class="ps-game-live">LIVE</div>
+            </div>
+            <div class="ps-game-pool">$820</div>
+            <div class="ps-game-meta">34 players &middot; 27s left</div>
+          </div>
+        </div>
+        <div class="phone-label">Game Lobby</div>
+      </div>
+      <div class="phone reveal">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="ps-gr">
+            <div class="ps-gr-pool-label">PRIZE POOL</div>
+            <div class="ps-gr-pool">$4,280</div>
+            <div class="ps-gr-timer">23</div>
+            <div class="ps-gr-btn">CLICK</div>
+          </div>
+        </div>
+        <div class="phone-label">Game Room</div>
+      </div>
+      <div class="phone reveal">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="ps-win">
+            <div class="ps-win-trophy">&#127942;</div>
+            <div class="ps-win-title">YOU WON.</div>
+            <div class="ps-win-amt">$4,280</div>
+            <div class="ps-win-sub">LAST CLICK WAS YOURS</div>
+            <div class="ps-win-btn">CLAIM PRIZE</div>
+          </div>
+        </div>
+        <div class="phone-label">Win Screen</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR SPONSORS -->
+<section class="sponsors section-darker" id="sponsors">
+  <div class="container">
+    <div class="sponsors-header reveal">
+      <div class="sec-label">FOR SPONSORS</div>
+      <div class="sec-title">Ads people want to watch</div>
+      <p class="sec-sub">Players choose to watch every second. No skipping. No scrolling past.</p>
+    </div>
+    <div class="sponsors-grid reveal">
+      <div class="sp-card">
+        <div class="sp-icon">&#127916;</div>
+        <div class="sp-title">94% Completion Rate</div>
+        <div class="sp-desc">Players are motivated to watch every second — their clicks depend on it. No more 5-second skips.</div>
+      </div>
+      <div class="sp-card">
+        <div class="sp-icon">&#128176;</div>
+        <div class="sp-title">Pay Per Second</div>
+        <div class="sp-desc">Set your own CPV rate ($0.01-$0.10/sec). Only pay for verified, engaged watch time. Full budget control.</div>
+      </div>
+      <div class="sp-card">
+        <div class="sp-icon">&#128200;</div>
+        <div class="sp-title">Real-Time Dashboard</div>
+        <div class="sp-desc">Watch completion rates, geographic data, and engagement metrics update live as your campaign runs.</div>
+      </div>
+      <div class="sp-card">
+        <div class="sp-icon">&#127919;</div>
+        <div class="sp-title">Brand Moments</div>
+        <div class="sp-desc">Your brand is tied to the excitement. Winners remember who funded their prize. Permanent positive association.</div>
+      </div>
+      <div class="sp-card">
+        <div class="sp-icon">&#128274;</div>
+        <div class="sp-title">Fraud Protection</div>
+        <div class="sp-desc">ML-powered scoring. Tab-focus tracking. IP dedup. Device fingerprinting. Only real humans count.</div>
+      </div>
+      <div class="sp-card">
+        <div class="sp-icon">&#128640;</div>
+        <div class="sp-title">10-Min Launch</div>
+        <div class="sp-desc">Upload video, set budget, fund via Stripe. Your game goes live in under 10 minutes. No sales calls needed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="waitlist section-dark" id="waitlist">
+  <div class="container">
+    <div class="waitlist-inner">
+      <div class="waitlist-left reveal">
+        <div class="sec-label">EARLY ACCESS</div>
+        <div class="sec-title">Get in first.</div>
+        <p class="sec-sub">The first 1,000 players get lifetime bonus clicks on every game. Reserve your spot and your username.</p>
+        <ul class="wl-perks">
+          <li><span class="icon">&#9889;</span> +5 bonus clicks on every game, forever</li>
+          <li><span class="icon">&#128274;</span> Lock your username before public launch</li>
+          <li><span class="icon">&#127942;</span> Early-access-only launch tournament</li>
+          <li><span class="icon">&#128227;</span> Shape the product — your feedback ships first</li>
+        </ul>
+        <div class="wl-counter">
+          <div class="wl-counter-num" id="wlCounterNum">...</div>
+          <div class="wl-counter-label">PEOPLE ON<br>THE WAITLIST</div>
+        </div>
+      </div>
+
+      <div id="wlFormWrap">
+        <div class="wl-form" id="wlForm">
+          <div class="wl-form-title">Join the waitlist</div>
+          <div class="wl-row">
+            <div class="wl-field">
+              <label>NAME</label>
+              <input type="text" id="wlName" placeholder="Jane Doe" autocomplete="name"/>
+            </div>
+            <div class="wl-field">
+              <label>EMAIL *</label>
+              <input type="email" id="wlEmail" placeholder="jane@example.com" autocomplete="email" required/>
             </div>
           </div>
+          <div class="wl-row">
+            <div class="wl-field">
+              <label>I WANT TO...</label>
+              <select id="wlRole">
+                <option value="" disabled selected>Select role</option>
+                <option value="player">Play & win prizes</option>
+                <option value="sponsor">Sponsor games (advertiser)</option>
+                <option value="both">Both</option>
+              </select>
+            </div>
+            <div class="wl-field">
+              <label>COUNTRY</label>
+              <select id="wlCountry">
+                <option value="" disabled selected>Select country</option>
+                <option value="US">United States</option>
+                <option value="GB">United Kingdom</option>
+                <option value="CA">Canada</option>
+                <option value="AU">Australia</option>
+                <option value="DE">Germany</option>
+                <option value="IN">India</option>
+                <option value="BR">Brazil</option>
+                <option value="JP">Japan</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="wl-field">
+            <label>DESIRED USERNAME</label>
+            <input type="text" id="wlHandle" placeholder="@speedclicker" autocomplete="off"/>
+          </div>
+          <button class="wl-submit" onclick="submitWaitlist()">Join Waitlist</button>
+          <div class="wl-note">No spam. Only emailed when it's time to play.</div>
         </div>
-      </div>
-      <div class="screen-card-content">
-        <div class="screen-card-title">Game Lobby</div>
-        <div class="screen-card-desc">Browse live games sorted by prize pool. See real-time player counts and timer states. Pick your moment.</div>
-      </div>
-    </div>
 
-    <!-- Screen 2: Game Room -->
-    <div class="screen-card fade-in">
-      <div class="screen-card-preview">
-        <div class="phone-mock" style="background: var(--surface);">
-          <div class="phone-status-bar">
-            <span>9:41</span>
-            <span>Nike Running</span>
-          </div>
-          <div class="mock-game">
-            <div class="mock-game-pool-label">PRIZE POOL</div>
-            <div class="mock-game-pool">$4,280</div>
-            <div class="mock-timer">23</div>
-            <div class="mock-click-btn">CLICK</div>
-          </div>
-        </div>
-      </div>
-      <div class="screen-card-content">
-        <div class="screen-card-title">Game Room</div>
-        <div class="screen-card-desc">Big timer. Big button. Watch the countdown and time your clicks perfectly. Every click resets to 30s.</div>
-      </div>
-    </div>
-
-    <!-- Screen 3: Win -->
-    <div class="screen-card fade-in">
-      <div class="screen-card-preview">
-        <div class="phone-mock" style="background: var(--surface);">
-          <div class="phone-status-bar">
-            <span>9:41</span>
-            <span></span>
-          </div>
-          <div class="mock-win">
-            <div class="mock-win-emoji">&#127942;</div>
-            <div class="mock-win-title">YOU WON.</div>
-            <div class="mock-win-amount">$4,280</div>
-            <div class="mock-win-sub">LAST CLICK WAS YOURS</div>
-            <div class="mock-win-btn">CLAIM PRIZE</div>
+        <div class="wl-success" id="wlSuccess">
+          <div class="wl-success-icon">&#9889;</div>
+          <h3>You're in.</h3>
+          <p>We'll email you when it's go time. Share to move up the list.</p>
+          <div class="wl-share-row">
+            <button class="wl-share-btn" onclick="shareTwitter()">Share on X</button>
+            <button class="wl-share-btn" onclick="copyLink()">Copy Link</button>
           </div>
         </div>
       </div>
-      <div class="screen-card-content">
-        <div class="screen-card-title">Win Screen</div>
-        <div class="screen-card-desc">The moment everyone plays for. Your click was last. The prize pool is yours. Claim instantly via Stripe.</div>
-      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ FOR SPONSORS ═══ -->
-<section class="sponsors-section" id="sponsors">
-  <div class="sponsors-header fade-in">
-    <div class="section-label">FOR SPONSORS</div>
-    <div class="section-heading">Ads people actually watch</div>
-    <p class="section-sub">Players choose to watch your entire video. No skipping. No scrolling past. Real attention, real engagement.</p>
-  </div>
-  <div class="sponsors-grid fade-in">
-    <div class="sponsor-card">
-      <div class="sponsor-card-icon">&#127916;</div>
-      <div class="sponsor-card-title">Full-Length Views</div>
-      <div class="sponsor-card-desc">Players watch every second — their clicks depend on it. Average completion rate: 94%.</div>
+<!-- SURVEY -->
+<section class="survey section-darker" id="survey">
+  <div class="container">
+    <div class="survey-header reveal">
+      <div class="sec-label">OPTIONAL</div>
+      <div class="sec-title">Help shape qliqr</div>
+      <p class="sec-sub">5 quick questions. 60 seconds. Your answers directly influence what we build.</p>
     </div>
-    <div class="sponsor-card">
-      <div class="sponsor-card-icon">&#127919;</div>
-      <div class="sponsor-card-title">Pay Per Second</div>
-      <div class="sponsor-card-desc">Set your own CPV rate ($0.01-$0.10/sec). Only pay for verified, engaged watch time.</div>
+    <div style="text-align:center">
+      <div class="survey-toggle" id="surveyToggle" onclick="toggleSurvey()">
+        <span class="survey-toggle-text">TAKE THE SURVEY</span>
+        <span class="survey-toggle-arrow">&#9660;</span>
+      </div>
     </div>
-    <div class="sponsor-card">
-      <div class="sponsor-card-icon">&#128200;</div>
-      <div class="sponsor-card-title">Real-Time Analytics</div>
-      <div class="sponsor-card-desc">Watch completion rates, geographic data, and engagement metrics update in real time.</div>
+
+    <div class="survey-body" id="surveyBody">
+      <div class="sq">
+        <div class="sq-label">
+          <span class="sq-num">Q1</span>
+          <span class="sq-text">How long of an ad would you watch for a shot at cash?</span>
+        </div>
+        <div class="sq-options">
+          <div class="sq-opt"><input type="radio" name="q1" id="q1a" value="15"/><label for="q1a">15 sec</label></div>
+          <div class="sq-opt"><input type="radio" name="q1" id="q1b" value="30"/><label for="q1b">30 sec</label></div>
+          <div class="sq-opt"><input type="radio" name="q1" id="q1c" value="60"/><label for="q1c">60 sec</label></div>
+          <div class="sq-opt"><input type="radio" name="q1" id="q1d" value="120"/><label for="q1d">2 min</label></div>
+          <div class="sq-opt"><input type="radio" name="q1" id="q1e" value="300"/><label for="q1e">5 min</label></div>
+        </div>
+      </div>
+
+      <div class="sq">
+        <div class="sq-label">
+          <span class="sq-num">Q2</span>
+          <span class="sq-text">Minimum prize pool that gets you excited?</span>
+        </div>
+        <div class="sq-options">
+          <div class="sq-opt"><input type="radio" name="q2" id="q2a" value="10"/><label for="q2a">$10</label></div>
+          <div class="sq-opt"><input type="radio" name="q2" id="q2b" value="50"/><label for="q2b">$50</label></div>
+          <div class="sq-opt"><input type="radio" name="q2" id="q2c" value="100"/><label for="q2c">$100</label></div>
+          <div class="sq-opt"><input type="radio" name="q2" id="q2d" value="500"/><label for="q2d">$500</label></div>
+          <div class="sq-opt"><input type="radio" name="q2" id="q2e" value="1000"/><label for="q2e">$1,000+</label></div>
+        </div>
+      </div>
+
+      <div class="sq">
+        <div class="sq-label">
+          <span class="sq-num">Q3</span>
+          <span class="sq-text">How many games would you play per day?</span>
+        </div>
+        <div class="sq-options">
+          <div class="sq-opt"><input type="radio" name="q3" id="q3a" value="1"/><label for="q3a">Just 1</label></div>
+          <div class="sq-opt"><input type="radio" name="q3" id="q3b" value="3"/><label for="q3b">2-3</label></div>
+          <div class="sq-opt"><input type="radio" name="q3" id="q3c" value="5"/><label for="q3c">4-5</label></div>
+          <div class="sq-opt"><input type="radio" name="q3" id="q3d" value="max"/><label for="q3d">As many as I can</label></div>
+        </div>
+      </div>
+
+      <div class="sq">
+        <div class="sq-label">
+          <span class="sq-num">Q4</span>
+          <span class="sq-text">How likely are you to tell a friend about this?</span>
+        </div>
+        <div class="sq-range-wrap">
+          <span class="sq-range-end">1</span>
+          <input type="range" class="sq-range" id="q4" min="1" max="10" value="7" oninput="document.getElementById('q4v').textContent=this.value"/>
+          <span class="sq-range-end">10</span>
+          <div class="sq-range-val" id="q4v">7</div>
+        </div>
+      </div>
+
+      <div class="sq">
+        <div class="sq-label">
+          <span class="sq-num">Q5</span>
+          <span class="sq-text">What would make you obsessed with this?</span>
+        </div>
+        <textarea class="sq-textarea" id="q5" placeholder="Tournaments, teams, streaks, leaderboards, social features..."></textarea>
+      </div>
+
+      <div class="survey-submit-row">
+        <span class="survey-note">All questions optional</span>
+        <button class="survey-submit" onclick="submitSurvey()">Submit Survey</button>
+      </div>
     </div>
-    <div class="sponsor-card">
-      <div class="sponsor-card-icon">&#128176;</div>
-      <div class="sponsor-card-title">You Set the Budget</div>
-      <div class="sponsor-card-desc">$100 to $100K. Games auto-spawn until your budget runs out. Full control, no surprises.</div>
-    </div>
-    <div class="sponsor-card">
-      <div class="sponsor-card-icon">&#128101;</div>
-      <div class="sponsor-card-title">Brand Association</div>
-      <div class="sponsor-card-desc">Your brand is tied to the excitement. Winners remember who funded their prize forever.</div>
-    </div>
-    <div class="sponsor-card">
-      <div class="sponsor-card-icon">&#128274;</div>
-      <div class="sponsor-card-title">Fraud Protection</div>
-      <div class="sponsor-card-desc">ML-powered fraud detection. Tab-focus tracking. IP deduplication. Only real views count.</div>
+
+    <div class="survey-thanks" id="surveyThanks">
+      <h3>Thanks for the input.</h3>
+      <p>Your answers will shape what we build next.</p>
     </div>
   </div>
 </section>
 
-<!-- ═══ WAITLIST ═══ -->
-<section class="waitlist-section" id="waitlist">
-  <div class="section-label">EARLY ACCESS</div>
-  <div class="section-heading">Get in before launch</div>
-  <p class="section-sub">Join the waitlist for early access. First 1,000 players get bonus clicks on every game for life.</p>
-
-  <div class="waitlist-form" id="waitlistForm">
-    <div class="form-row">
-      <input type="text" id="wlName" placeholder="Your name" autocomplete="name"/>
-      <input type="email" id="wlEmail" placeholder="Email address" autocomplete="email" required/>
-    </div>
-    <div class="form-row">
-      <select id="wlRole">
-        <option value="" disabled selected>I want to...</option>
-        <option value="player">Play games & win prizes</option>
-        <option value="sponsor">Sponsor games (advertiser)</option>
-        <option value="both">Both — play and sponsor</option>
-      </select>
-      <select id="wlCountry">
-        <option value="" disabled selected>Country</option>
-        <option value="US">United States</option>
-        <option value="GB">United Kingdom</option>
-        <option value="CA">Canada</option>
-        <option value="AU">Australia</option>
-        <option value="DE">Germany</option>
-        <option value="FR">France</option>
-        <option value="IN">India</option>
-        <option value="BR">Brazil</option>
-        <option value="JP">Japan</option>
-        <option value="other">Other</option>
-      </select>
-    </div>
-    <div class="form-row full">
-      <input type="text" id="wlHandle" placeholder="Desired username (optional)" autocomplete="off"/>
-    </div>
-    <button type="button" class="waitlist-submit" onclick="handleWaitlistSubmit()">JOIN THE WAITLIST</button>
-    <div class="waitlist-note">No spam. Unsubscribe anytime. We'll only email you when it's time to play.</div>
-  </div>
-
-  <div class="waitlist-success" id="waitlistSuccess">
-    <div class="check">&#9989;</div>
-    <h3>You're on the list!</h3>
-    <p>We'll reach out when it's your turn. Share to move up.</p>
-  </div>
-
-  <div class="waitlist-counter">
-    <div class="counter-num" id="waitlistCount">2,847</div>
-    <div class="counter-label">PEOPLE ON<br>THE WAITLIST</div>
-  </div>
-</section>
-
-<!-- ═══ SURVEY (OPTIONAL) ═══ -->
-<section class="survey-section" id="survey">
-  <div class="survey-header fade-in">
-    <div class="section-label">OPTIONAL SURVEY</div>
-    <div class="section-heading">Help us build this</div>
-    <p class="section-sub">Quick 5-question survey to shape what qliqr becomes. Takes 60 seconds.</p>
-    <div class="survey-toggle" id="surveyToggle" onclick="toggleSurvey()">
-      <span class="survey-toggle-text">TAKE THE SURVEY</span>
-      <span class="survey-toggle-arrow">&#9660;</span>
-    </div>
-  </div>
-
-  <div class="survey-content" id="surveyContent">
-
-    <!-- Q1 -->
-    <div class="survey-question fade-in">
-      <div class="survey-q-label">
-        <span class="survey-q-num">Q1</span>
-        How long of an ad would you watch for a chance to win cash?
-      </div>
-      <div class="survey-options">
-        <div class="survey-option">
-          <input type="radio" name="q1" id="q1a" value="15"/>
-          <label for="q1a">15 sec</label>
-        </div>
-        <div class="survey-option">
-          <input type="radio" name="q1" id="q1b" value="30"/>
-          <label for="q1b">30 sec</label>
-        </div>
-        <div class="survey-option">
-          <input type="radio" name="q1" id="q1c" value="60"/>
-          <label for="q1c">60 sec</label>
-        </div>
-        <div class="survey-option">
-          <input type="radio" name="q1" id="q1d" value="120"/>
-          <label for="q1d">2 min</label>
-        </div>
-        <div class="survey-option">
-          <input type="radio" name="q1" id="q1e" value="300"/>
-          <label for="q1e">5 min</label>
-        </div>
-      </div>
+<!-- FAQ -->
+<section class="faq section-dark" id="faq">
+  <div class="container">
+    <div class="faq-header reveal">
+      <div class="sec-label">FAQ</div>
+      <div class="sec-title">Quick answers</div>
     </div>
 
-    <!-- Q2 -->
-    <div class="survey-question fade-in">
-      <div class="survey-q-label">
-        <span class="survey-q-num">Q2</span>
-        What minimum prize pool would get you excited to play?
-      </div>
-      <div class="survey-options">
-        <div class="survey-option">
-          <input type="radio" name="q2" id="q2a" value="10"/>
-          <label for="q2a">$10</label>
-        </div>
-        <div class="survey-option">
-          <input type="radio" name="q2" id="q2b" value="50"/>
-          <label for="q2b">$50</label>
-        </div>
-        <div class="survey-option">
-          <input type="radio" name="q2" id="q2c" value="100"/>
-          <label for="q2c">$100</label>
-        </div>
-        <div class="survey-option">
-          <input type="radio" name="q2" id="q2d" value="500"/>
-          <label for="q2d">$500</label>
-        </div>
-        <div class="survey-option">
-          <input type="radio" name="q2" id="q2e" value="1000"/>
-          <label for="q2e">$1,000+</label>
-        </div>
-      </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">Is it really free? <span class="arrow">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">Yes, 100%. Sponsors fund everything. You watch their ad, earn clicks, and compete. The only cost is your time watching the video. No sign-up fee, no in-app purchases, no hidden charges.</div></div>
     </div>
-
-    <!-- Q3 -->
-    <div class="survey-question fade-in">
-      <div class="survey-q-label">
-        <span class="survey-q-num">Q3</span>
-        How many games would you play per day?
-      </div>
-      <div class="survey-options">
-        <div class="survey-option">
-          <input type="radio" name="q3" id="q3a" value="1"/>
-          <label for="q3a">Just 1</label>
-        </div>
-        <div class="survey-option">
-          <input type="radio" name="q3" id="q3b" value="3"/>
-          <label for="q3b">2-3</label>
-        </div>
-        <div class="survey-option">
-          <input type="radio" name="q3" id="q3c" value="5"/>
-          <label for="q3c">4-5</label>
-        </div>
-        <div class="survey-option">
-          <input type="radio" name="q3" id="q3d" value="10"/>
-          <label for="q3d">As many as possible</label>
-        </div>
-      </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How do winners get paid? <span class="arrow">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">Instant payout via Stripe Connect. Set up a free Stripe account, and when you win, the money is transferred directly. Prizes under $500 pay out immediately. Larger wins go through a brief review (up to 7 days) to prevent fraud.</div></div>
     </div>
-
-    <!-- Q4 -->
-    <div class="survey-question fade-in">
-      <div class="survey-q-label">
-        <span class="survey-q-num">Q4</span>
-        On a scale of 1-10, how likely are you to share this with friends?
-      </div>
-      <div class="survey-range-wrap">
-        <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">1</span>
-        <input type="range" class="survey-range" id="q4range" min="1" max="10" value="7" oninput="document.getElementById('q4val').textContent=this.value"/>
-        <span style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);">10</span>
-        <div class="survey-range-val" id="q4val">7</div>
-      </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">What stops bots from winning? <span class="arrow">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">Multi-layer fraud detection: IP rate limiting, device fingerprinting, tab-focus tracking during ads, heartbeat cadence analysis, and ML-powered fraud scoring. Bot-like behavior gets flagged instantly. We take this very seriously — fair play is the whole point.</div></div>
     </div>
-
-    <!-- Q5 -->
-    <div class="survey-question fade-in">
-      <div class="survey-q-label">
-        <span class="survey-q-num">Q5</span>
-        Any features you'd love to see? What would make you obsessed?
-      </div>
-      <textarea class="survey-textarea" id="q5text" placeholder="Team games, tournaments, leaderboards, social features..."></textarea>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">How big do prize pools get? <span class="arrow">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">Pools grow with every ad view. Typically 25% of each view's revenue goes to the pool. Ranges from $10 to $10,000+ depending on the sponsor's budget and player count. More players watching = bigger pool.</div></div>
     </div>
-
-    <div class="survey-submit-row">
-      <span class="survey-optional-note">All questions are optional</span>
-      <button class="survey-submit" onclick="handleSurveySubmit()">SUBMIT SURVEY</button>
-    </div>
-  </div>
-
-  <div class="survey-thanks" id="surveyThanks">
-    <h3>Thanks for the input!</h3>
-    <p>Your answers will directly shape what we build.</p>
-  </div>
-</section>
-
-<!-- ═══ FAQ ═══ -->
-<section class="faq-section" id="faq">
-  <div class="faq-header fade-in">
-    <div class="section-label">FAQ</div>
-    <div class="section-heading">Questions</div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-question" onclick="toggleFaq(this)">
-      Is it really free to play?
-      <span class="faq-arrow">+</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">Yes, 100% free. There is no purchase required, ever. The prize pools are entirely funded by sponsors who pay for video ad views. You watch their ad, earn clicks, and compete for the prize. The only cost to you is your time watching the sponsor's video.</div>
-    </div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-question" onclick="toggleFaq(this)">
-      How do I actually win money?
-      <span class="faq-arrow">+</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">Every game has a 30-second countdown timer. Each click from any player resets it back to 30. When 30 full seconds pass with nobody clicking, the last person who clicked wins the entire prize pool. Payouts are instant via Stripe Connect — you'll set up a free account to receive funds.</div>
-    </div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-question" onclick="toggleFaq(this)">
-      How do sponsors benefit?
-      <span class="faq-arrow">+</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">Sponsors get something almost unheard of in advertising: viewers who choose to watch their entire video. The average completion rate is 94% because players are incentivized — each second watched = 1 click credit. Sponsors set their own CPV rate and budget cap. They only pay for verified, engaged watch time.</div>
-    </div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-question" onclick="toggleFaq(this)">
-      What prevents cheating?
-      <span class="faq-arrow">+</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">We use multi-layer fraud detection: IP rate limiting, device fingerprinting, tab-focus tracking, heartbeat cadence analysis, and ML-powered fraud scoring. If you alt-tab during the ad, credit accumulation pauses. Bot-like behavior is flagged and accounts are banned. Suspicious wins over $500 are held for review.</div>
-    </div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-question" onclick="toggleFaq(this)">
-      How big are the prize pools?
-      <span class="faq-arrow">+</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">Prize pools grow with every ad view. A portion (typically 25%) of each ad view's revenue goes directly into the prize pool. Pools range from $10 to $10,000+ depending on the sponsor's budget and how many people play. More players = more ad views = bigger pool.</div>
-    </div>
-  </div>
-
-  <div class="faq-item">
-    <button class="faq-question" onclick="toggleFaq(this)">
-      When does qliqr launch?
-      <span class="faq-arrow">+</span>
-    </button>
-    <div class="faq-answer">
-      <div class="faq-answer-inner">We're building right now. Join the waitlist for early access — the first 1,000 signups get bonus clicks on every game for life. We'll email you when it's your turn.</div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">When does it launch? <span class="arrow">+</span></button>
+      <div class="faq-a"><div class="faq-a-inner">We're building now. Join the waitlist — first 1,000 get lifetime bonus clicks. We'll email you when it's your turn.</div></div>
     </div>
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
-<footer>
-  <div class="footer-left">
-    <div class="footer-logo"><em>q</em>liqr</div>
-    <div class="footer-tagline">WATCH ADS. GET CLICKS. WIN CASH.</div>
-    <div class="footer-copy">&copy; 2026 qliqr. All rights reserved.</div>
-  </div>
-  <div class="footer-links">
-    <a href="#how">How it works</a>
-    <a href="#sponsors">For sponsors</a>
-    <a href="#waitlist">Join waitlist</a>
-    <a href="#faq">FAQ</a>
+<!-- FOOTER -->
+<footer class="section-darkest">
+  <div class="foot">
+    <div class="foot-logo">qliqr</div>
+    <div class="foot-copy">&copy; 2026 qliqr</div>
+    <div class="foot-links">
+      <a href="#how">How it works</a>
+      <a href="#sponsors">For sponsors</a>
+      <a href="#waitlist">Waitlist</a>
+      <a href="#faq">FAQ</a>
+    </div>
   </div>
 </footer>
 
 <script>
-// ═══════════════════════════════
-// INTERACTIVE DEMO
-// ═══════════════════════════════
-const demoState = {
-  timer: 27,
-  pool: 2847,
-  clicks: 42,
-  interval: null,
-  feedIndex: 0,
-};
+// ══════════════════════════════════════════
+// CONFIG — Set your Google Apps Script URL here
+// ══════════════════════════════════════════
+const API_URL = window.QLIQR_API_URL || '';
 
-const demoNames = ['alex_k', 'sara99', 'clickmaster', 'jw_plays', 'maya_r', 'noclue42', 'speedtap', 'winner_tk'];
+// ══════════════════════════════════════════
+// LIVE SIM
+// ══════════════════════════════════════════
+const sim = { timer: 27, pool: 2847, clicks: 42 };
+const names = ['alex_k','sara99','clickmstr','jw_plays','maya_r','noclue42','speedtap','tk_win','zara11','click0r'];
 
-function startDemo() {
-  demoState.interval = setInterval(() => {
-    demoState.timer--;
-    if (demoState.timer <= 0) {
-      demoState.timer = 30;
-      demoState.pool += Math.floor(Math.random() * 15) + 5;
+setInterval(() => {
+  sim.timer--;
+  if (sim.timer <= 0) { sim.timer = 30; sim.pool += Math.floor(Math.random() * 20) + 5; }
+
+  // Random other player clicks
+  if (Math.random() < 0.35 && sim.timer < 26) {
+    sim.timer = 30;
+    sim.pool += Math.floor(Math.random() * 4) + 1;
+    addFeed(names[Math.floor(Math.random() * names.length)] + ' clicked');
+  }
+
+  const t = document.getElementById('simTimer');
+  t.textContent = sim.timer;
+  t.className = 'sim-timer' + (sim.timer <= 5 ? ' danger' : sim.timer <= 10 ? ' warn' : '');
+  document.getElementById('simPool').textContent = '$' + sim.pool.toLocaleString();
+  document.getElementById('simBar').style.width = (sim.timer / 30 * 100) + '%';
+  if (sim.timer <= 10) document.getElementById('simBar').style.background = sim.timer <= 5 ? 'var(--magenta)' : 'var(--orange)';
+  else document.getElementById('simBar').style.background = 'var(--lime)';
+}, 1000);
+
+function simClick() {
+  if (sim.clicks <= 0) return;
+  sim.clicks--;
+  sim.timer = 30;
+  document.getElementById('simClicksLeft').textContent = sim.clicks + ' left';
+  document.getElementById('simTimer').textContent = '30';
+  document.getElementById('simTimer').className = 'sim-timer';
+  document.getElementById('simBar').style.width = '100%';
+  document.getElementById('simBar').style.background = 'var(--lime)';
+  addFeed('<span class="you">you</span> clicked');
+  if (navigator.vibrate) navigator.vibrate(12);
+  const btn = document.getElementById('simBtn');
+  btn.style.transform = 'scale(0.9)';
+  setTimeout(() => btn.style.transform = '', 80);
+}
+
+function addFeed(html) {
+  const f = document.getElementById('simFeed');
+  const d = document.createElement('div');
+  d.className = 'sim-feed-item';
+  d.innerHTML = html;
+  f.insertBefore(d, f.firstChild);
+  if (f.children.length > 3) f.removeChild(f.lastChild);
+}
+
+// ══════════════════════════════════════════
+// WAITLIST COUNT — fetch real count
+// ══════════════════════════════════════════
+let waitlistCount = 0;
+
+async function fetchCount() {
+  if (!API_URL) {
+    // Fallback: use localStorage count
+    waitlistCount = parseInt(localStorage.getItem('qliqr_wl_count') || '0');
+    updateCountDisplay();
+    return;
+  }
+  try {
+    const r = await fetch(API_URL + '?action=count');
+    const d = await r.json();
+    if (d.count !== undefined) {
+      waitlistCount = d.count;
+      localStorage.setItem('qliqr_wl_count', waitlistCount);
     }
-
-    const timerEl = document.getElementById('demoTimer');
-    timerEl.textContent = demoState.timer;
-    timerEl.className = 'demo-timer' +
-      (demoState.timer <= 5 ? ' danger' : demoState.timer <= 10 ? ' warn' : '');
-
-    document.getElementById('demoPool').textContent = '$' + demoState.pool.toLocaleString();
-
-    // Random "other player" clicks
-    if (Math.random() < 0.3 && demoState.timer < 25) {
-      const name = demoNames[Math.floor(Math.random() * demoNames.length)];
-      demoState.timer = 30;
-      demoState.pool += Math.floor(Math.random() * 3) + 1;
-      addDemoFeedItem(name + ' clicked');
-    }
-  }, 1000);
+  } catch (e) {
+    waitlistCount = parseInt(localStorage.getItem('qliqr_wl_count') || '0');
+  }
+  updateCountDisplay();
 }
 
-function handleDemoClick() {
-  if (demoState.clicks <= 0) return;
-  demoState.clicks--;
-  demoState.timer = 30;
-  document.getElementById('demoClicksLeft').textContent = demoState.clicks + ' LEFT';
-  document.getElementById('demoTimer').textContent = '30';
-  document.getElementById('demoTimer').className = 'demo-timer';
-  addDemoFeedItem('you clicked');
-
-  // Haptic
-  if (navigator.vibrate) navigator.vibrate(15);
-
-  // Button pulse
-  const btn = document.getElementById('demoClickBtn');
-  btn.style.transform = 'scale(0.92)';
-  setTimeout(() => btn.style.transform = '', 100);
+function updateCountDisplay() {
+  const display = waitlistCount > 0 ? waitlistCount.toLocaleString() : '0';
+  document.getElementById('heroCount').textContent = display;
+  document.getElementById('wlCounterNum').textContent = display;
 }
 
-function addDemoFeedItem(text) {
-  const feed = document.getElementById('demoFeed');
-  const item = document.createElement('div');
-  item.className = 'demo-feed-item';
-  item.innerHTML = '<span>' + text + '</span>';
-  feed.insertBefore(item, feed.firstChild);
-  if (feed.children.length > 3) feed.removeChild(feed.lastChild);
-}
+fetchCount();
 
-startDemo();
-
-// ═══════════════════════════════
-// WAITLIST
-// ═══════════════════════════════
-function handleHeroSignup() {
+// ══════════════════════════════════════════
+// HERO QUICK SIGNUP
+// ══════════════════════════════════════════
+function heroSignup() {
   const email = document.getElementById('heroEmail').value.trim();
   if (!email || !email.includes('@')) {
-    document.getElementById('heroEmail').style.borderColor = 'var(--red)';
+    document.getElementById('heroEmail').style.borderColor = 'var(--magenta)';
     document.getElementById('heroEmail').focus();
     return;
   }
-  // Scroll to full waitlist form and prefill email
   document.getElementById('wlEmail').value = email;
   document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
-  setTimeout(() => document.getElementById('wlName').focus(), 600);
+  setTimeout(() => document.getElementById('wlName').focus(), 500);
 }
 
-function handleWaitlistSubmit() {
+// ══════════════════════════════════════════
+// WAITLIST SUBMIT
+// ══════════════════════════════════════════
+async function submitWaitlist() {
   const email = document.getElementById('wlEmail').value.trim();
   if (!email || !email.includes('@')) {
-    document.getElementById('wlEmail').style.borderColor = 'var(--accent)';
+    document.getElementById('wlEmail').style.borderColor = 'var(--magenta)';
     document.getElementById('wlEmail').focus();
     return;
   }
 
   const data = {
+    action: 'waitlist',
     name: document.getElementById('wlName').value.trim(),
     email: email,
-    role: document.getElementById('wlRole').value,
-    country: document.getElementById('wlCountry').value,
+    role: document.getElementById('wlRole').value || '',
+    country: document.getElementById('wlCountry').value || '',
     handle: document.getElementById('wlHandle').value.trim(),
     timestamp: new Date().toISOString(),
   };
 
-  // Store in localStorage as simple persistence
+  // Disable button
+  const btn = document.querySelector('.wl-submit');
+  btn.textContent = 'Joining...';
+  btn.disabled = true;
+
+  // Send to API
+  if (API_URL) {
+    try {
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(data),
+      });
+    } catch (e) {
+      console.warn('[qliqr] API unavailable, saving locally', e);
+    }
+  }
+
+  // Always save locally as backup
   const existing = JSON.parse(localStorage.getItem('qliqr_waitlist') || '[]');
   existing.push(data);
   localStorage.setItem('qliqr_waitlist', JSON.stringify(existing));
 
-  // Show success
-  document.getElementById('waitlistForm').style.display = 'none';
-  document.getElementById('waitlistSuccess').classList.add('show');
+  // Update count
+  waitlistCount++;
+  localStorage.setItem('qliqr_wl_count', waitlistCount);
+  updateCountDisplay();
 
-  // Increment counter
-  const countEl = document.getElementById('waitlistCount');
-  const current = parseInt(countEl.textContent.replace(/,/g, ''));
-  countEl.textContent = (current + 1).toLocaleString();
+  // Show success
+  document.getElementById('wlForm').style.display = 'none';
+  document.getElementById('wlSuccess').classList.add('show');
 
   console.log('[qliqr] Waitlist signup:', data);
 }
 
-// ═══════════════════════════════
+// ══════════════════════════════════════════
 // SURVEY
-// ═══════════════════════════════
+// ══════════════════════════════════════════
 function toggleSurvey() {
-  const toggle = document.getElementById('surveyToggle');
-  const content = document.getElementById('surveyContent');
-  toggle.classList.toggle('open');
-  content.classList.toggle('show');
+  document.getElementById('surveyToggle').classList.toggle('open');
+  document.getElementById('surveyBody').classList.toggle('show');
 }
 
-function handleSurveySubmit() {
+async function submitSurvey() {
   const data = {
-    q1_adLength: document.querySelector('input[name="q1"]:checked')?.value || null,
-    q2_minPrize: document.querySelector('input[name="q2"]:checked')?.value || null,
-    q3_gamesPerDay: document.querySelector('input[name="q3"]:checked')?.value || null,
-    q4_shareability: document.getElementById('q4range').value,
-    q5_features: document.getElementById('q5text').value.trim(),
+    action: 'survey',
+    q1_adLength: document.querySelector('input[name="q1"]:checked')?.value || '',
+    q2_minPrize: document.querySelector('input[name="q2"]:checked')?.value || '',
+    q3_gamesPerDay: document.querySelector('input[name="q3"]:checked')?.value || '',
+    q4_shareability: document.getElementById('q4').value,
+    q5_features: document.getElementById('q5').value.trim(),
     timestamp: new Date().toISOString(),
   };
 
-  // Store locally
+  if (API_URL) {
+    try {
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify(data),
+      });
+    } catch (e) {
+      console.warn('[qliqr] API unavailable, saving locally');
+    }
+  }
+
+  // Save locally
   const existing = JSON.parse(localStorage.getItem('qliqr_surveys') || '[]');
   existing.push(data);
   localStorage.setItem('qliqr_surveys', JSON.stringify(existing));
 
-  // Show thanks
-  document.getElementById('surveyContent').style.display = 'none';
+  document.getElementById('surveyBody').style.display = 'none';
   document.getElementById('surveyToggle').style.display = 'none';
   document.getElementById('surveyThanks').classList.add('show');
-
-  console.log('[qliqr] Survey submitted:', data);
+  console.log('[qliqr] Survey:', data);
 }
 
-// ═══════════════════════════════
-// FAQ ACCORDION
-// ═══════════════════════════════
-function toggleFaq(button) {
-  const item = button.parentElement;
-  const answer = item.querySelector('.faq-answer');
-  const isOpen = item.classList.contains('open');
-
-  // Close all
+// ══════════════════════════════════════════
+// FAQ
+// ══════════════════════════════════════════
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  const ans = item.querySelector('.faq-a');
+  const open = item.classList.contains('open');
   document.querySelectorAll('.faq-item').forEach(i => {
     i.classList.remove('open');
-    i.querySelector('.faq-answer').style.maxHeight = '0';
+    i.querySelector('.faq-a').style.maxHeight = '0';
   });
-
-  // Open clicked if it was closed
-  if (!isOpen) {
+  if (!open) {
     item.classList.add('open');
-    answer.style.maxHeight = answer.scrollHeight + 'px';
+    ans.style.maxHeight = ans.scrollHeight + 'px';
   }
 }
 
-// ═══════════════════════════════
-// SCROLL ANIMATIONS
-// ═══════════════════════════════
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-// ═══════════════════════════════
-// WAITLIST COUNTER ANIMATION
-// ═══════════════════════════════
-function animateCounter() {
-  const el = document.getElementById('waitlistCount');
-  const target = 2847;
-  let current = 0;
-  const step = Math.ceil(target / 60);
-  const interval = setInterval(() => {
-    current += step;
-    if (current >= target) {
-      current = target;
-      clearInterval(interval);
-    }
-    el.textContent = current.toLocaleString();
-  }, 16);
+// ══════════════════════════════════════════
+// SHARE
+// ══════════════════════════════════════════
+function shareTwitter() {
+  const text = encodeURIComponent('Just joined the qliqr waitlist — a free game where watching ads earns you clicks, and the last click wins real cash. Zero cost to play.');
+  window.open('https://twitter.com/intent/tweet?text=' + text, '_blank');
 }
 
-// Trigger counter on scroll into view
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      animateCounter();
-      counterObserver.disconnect();
-    }
+function copyLink() {
+  navigator.clipboard?.writeText(window.location.origin).then(() => {
+    const btns = document.querySelectorAll('.wl-share-btn');
+    btns[1].textContent = 'Copied!';
+    setTimeout(() => btns[1].textContent = 'Copy Link', 2000);
   });
-}, { threshold: 0.5 });
+}
 
-counterObserver.observe(document.querySelector('.waitlist-counter'));
+// ══════════════════════════════════════════
+// SCROLL REVEAL
+// ══════════════════════════════════════════
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
